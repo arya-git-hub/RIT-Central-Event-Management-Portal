@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIT Central Event Management Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- PWA Support Script -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
+    <!-- CDN Library dependencies for Premium features -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <header class="navbar glass-panel no-print">
+        <div class="nav-brand" id="nav-logo">
+            <img src="logo.png" alt="RIT Logo" class="nav-logo-icon">
+            <div class="nav-title">
+                <h1>RIT Event Portal</h1>
+                <span>Rajarambapu Institute of Technology</span>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li class="nav-item active" id="nav-home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    Home
+                </li>
+
+                <li class="nav-item hidden" id="nav-dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Admin Panel
+                </li>
+                <li class="nav-item" id="nav-login">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                        <polyline points="10 17 15 12 10 7" />
+                        <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    Coordinator Login
+                </li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" title="Switch Theme Mode">
+
+                        <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v2" />
+                            <path d="M12 20v2" />
+                            <path d="m4.93 4.93 1.41 1.41" />
+                            <path d="m17.66 17.66 1.41 1.41" />
+                            <path d="M2 12h2" />
+                            <path d="M20 12h2" />
+                            <path d="m6.34 17.66-1.41 1.41" />
+                            <path d="m19.07 4.93-1.41 1.41" />
+                        </svg>
+
+                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Breadcrumb trails -->
+        <div class="breadcrumb-container no-print" id="breadcrumbs-holder"></div>
+
+
+        <section id="home-view" class="view">
+
+            <div id="hero-slider" class="hero-section">
+            </div>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-depts">0</h3>
+                        <p>Total Departments</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--accent-gold);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="7" />
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-events">0</h3>
+                        <p>Total Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--success-color);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-upcoming">0</h3>
+                        <p>Upcoming Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--text-muted);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-completed">0</h3>
+                        <p>Completed Events</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-panel glass-panel">
+                <div class="search-row">
+                    <div class="search-input-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" id="search-input"
+                            placeholder="Search events by name, coordinators, topic, rules..." class="search-input">
+                    </div>
+                </div>
+                <div class="filter-selects">
+                    <select id="filter-dept" class="filter-select">
+                        <option value="">All Departments</option>
+                    </select>
+                    <select id="filter-year" class="filter-select">
+                        <option value="">All Academic Years</option>
+                        <option value="2025-2026">2025-2026 (Current)</option>
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2023-2024">2023-2024</option>
+                    </select>
+                    <select id="filter-category" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Non Technical">Non Technical</option>
+                    </select>
+                    <select id="filter-status" class="filter-select">
+                        <option value="">All Statuses</option>
+                        <option value="Upcoming">Upcoming Events</option>
+                        <option value="Completed">Completed Events</option>
+                    </select>
+                    <select id="filter-month" class="filter-select">
+                        <option value="">All Months</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2>Upcoming College Events</h2>
+            </div>
+            <div id="upcoming-events-grid" class="events-grid">
+
+            </div>
+
+            <div class="section-header" style="margin-top: 4rem;">
+                <h2>Event Calendar</h2>
+            </div>
+            <div class="calendar-widget glass-panel" style="padding: 1.5rem; border-radius: 20px; margin-bottom: 3rem;">
+                <div class="calendar-header"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                    <button class="btn btn-outline" id="cal-prev-btn" style="padding: 0.5rem 1rem;">&larr; Prev</button>
+                    <h3 id="cal-month-title" style="font-weight: 700; font-size: 1.25rem;">August 2026</h3>
+                    <button class="btn btn-outline" id="cal-next-btn" style="padding: 0.5rem 1rem;">Next &rarr;</button>
+                </div>
+                <div class="calendar-grid-days"
+                    style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div id="calendar-days-container"
+                    style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background-color: var(--border-color); border-radius: 0 0 12px 12px; overflow: hidden; margin-top: 0.5rem;">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 4rem;">
+                <h2>Browse Department-wise</h2>
+            </div>
+            <div id="dept-grid" class="dept-grid">
+
+            </div>
+        </section>
+
+
+        <section id="department-view" class="view hidden">
+            <button class="btn btn-outline" id="dept-back-btn" style="margin-bottom: 1.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                </svg>
+                Back to Homepage
+            </button>
+
+            <div class="dept-header" id="dept-banner-box">
+
+            </div>
+
+            <div class="tabs-container">
+                <button class="tab-btn active" id="tab-dept-upcoming">Upcoming Events</button>
+                <button class="tab-btn" id="tab-dept-archives">Previous Year Archives</button>
+                <button class="tab-btn" id="tab-dept-coordinators">Coordinators & Faculty</button>
+                <button class="tab-btn" id="tab-dept-gallery">Gallery</button>
+            </div>
+
+            <div class="tab-pane">
+                <div id="dept-upcoming-pane">
+                    <div id="dept-upcoming-events-grid" class="events-grid"></div>
+                </div>
+                <div id="dept-archives-pane" class="hidden">
+                    <div id="dept-archives-wrapper"></div>
+                </div>
+                <div id="dept-coordinators-pane" class="hidden">
+                    <div id="dept-coordinators-grid" class="coordinators-grid"></div>
+                </div>
+                <div id="dept-gallery-pane" class="hidden">
+                    <div id="dept-gallery-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="event-details-view" class="view hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <button class="btn btn-outline" id="details-back-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12" />
+                        <polyline points="12 19 5 12 12 5" />
+                    </svg>
+                    Back to Department
+                </button>
+                <div style="display: flex; gap: 0.5rem;" class="no-print">
+                    <button class="btn btn-outline" id="details-share-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3" />
+                            <circle cx="6" cy="12" r="3" />
+                            <circle cx="18" cy="19" r="3" />
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                        </svg>
+                        Share
+                    </button>
+                    <button class="btn btn-outline" id="details-print-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 6 2 18 2 18 9" />
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                            <rect x="6" y="14" width="12" height="8" />
+                        </svg>
+                        Print
+                    </button>
+                </div>
+            </div>
+
+            <div class="event-details-layout" id="event-details-content">
+            </div>
+        </section>
+
+
+        <section id="login-view" class="view hidden">
+            <div class="login-container glass-panel">
+                <div class="login-header">
+                    <img src="logo.png" alt="RIT Logo" class="nav-logo-icon"
+                        style="margin: 0 auto 1rem; width: 52px; height: 52px; border-radius: 16px; object-fit: cover;">
+                    <h2>RIT Central Portal</h2>
+                    <p>Department Admin Access Desk</p>
+                </div>
+                <div id="login-error" class="alert alert-danger hidden"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <div style="position: relative;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <input type="text" id="username" placeholder="Enter admin username" class="form-control"
+                                style="padding-left: 2.5rem;" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div style="position: relative;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <input type="password" id="password" placeholder="Enter secret password"
+                                class="form-control" style="padding-left: 2.5rem;" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Sign In to
+                        Dashboard</button>
+                </form>
+                <div
+                    style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color); fontSize: 0.8rem; color: var(--text-secondary);">
+                    <div
+                        style="display: flex; align-items: center; gap: 0.25rem; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.8rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--accent-gold);">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        Demo Admin Credentials (Database Seed)
+                    </div>
+                    <ul style="padding-left: 1.25rem; line-height: 1.4; font-size: 0.8rem; list-style-type: disc;">
+                        <li><strong>Super Admin:</strong> superadmin / admin123</li>
+                        <li><strong>Department Admin (CSE HOD):</strong> cseadmin / cse123</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATE PORTAL VIEW -->
+        <section id="certificates-view" class="view hidden">
+            <div class="login-container glass-panel" style="max-width: 550px;">
+                <div class="login-header">
+                    <img src="logo.png" alt="RIT Logo" class="nav-logo-icon"
+                        style="margin: 0 auto 1rem; width: 52px; height: 52px; border-radius: 16px; object-fit: cover;">
+                    <h2>RIT Certificate Desk</h2>
+                    <p>Enter your Registration Ticket ID or Email to fetch and generate your Event Participation
+                        Certificate</p>
+                </div>
+                <form id="certificate-form">
+                    <div class="form-group">
+                        <label class="form-label" for="cert-ticket-id">Ticket ID / Email address</label>
+                        <input type="text" id="cert-ticket-id" placeholder="e.g. RIT-REG-XXXXXX or student@rit.edu"
+                            class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Search &
+                        Generate Certificate</button>
+                </form>
+                <div id="cert-result-box" class="hidden"
+                    style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; text-align: center;">
+                    <div class="alert alert-success">Match found! You are eligible for participation certificate.</div>
+                    <h4 id="cert-event-title" style="font-weight: 700; margin-bottom: 0.5rem;">Event Title</h4>
+                    <p id="cert-recipient-name"
+                        style="font-size: 1.1rem; font-weight: 500; color: var(--accent-color); margin-bottom: 1.5rem;">
+                        Student Name</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button class="btn btn-outline" id="btn-cert-preview">Preview Certificate</button>
+                        <button class="btn btn-primary" id="btn-cert-download">Download PDF Certificate</button>
+                    </div>
+                    <!-- Certificate Mock Canvas (Invisible) -->
+                    <div id="cert-canvas-wrapper"
+                        style="display:none; margin-top: 1.5rem; border: 1px solid var(--border-color); padding: 2rem; background-color: white; color: black; font-family: serif; border-radius: 8px; text-shadow: none;">
+                        <!-- Certificate Layout HTML -->
+                    </div>
+                </div>
+                <div id="cert-error" class="alert alert-danger hidden" style="margin-top: 1rem;">No valid registration
+                    record found. Please verify details or contact your student coordinator.</div>
+            </div>
+        </section>
+
+
+        <section id="dashboard-view" class="view hidden">
+            <div class="dashboard-layout">
+                <div class="sidebar-panel">
+                    <div class="admin-profile">
+                        <div class="admin-avatar" id="dash-avatar">?</div>
+                        <div class="admin-name" id="dash-name">Loading...</div>
+                        <div class="admin-dept" id="dash-dept">DEPT</div>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item active" id="menu-events">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            Manage Events
+                        </li>
+                        <li class="sidebar-item" id="menu-registrations">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            Registrations
+                        </li>
+                        <li class="sidebar-item" id="menu-depts">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="9" />
+                                <rect x="14" y="3" width="7" height="5" />
+                                <rect x="14" y="12" width="7" height="9" />
+                                <rect x="3" y="16" width="7" height="5" />
+                            </svg>
+                            Departments
+                        </li>
+                        <li class="sidebar-item" id="menu-admins">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            Manage Admins
+                        </li>
+                        <li class="sidebar-item" id="menu-logs">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                            Audit Logs
+                        </li>
+                        <li class="sidebar-item" id="menu-analytics">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10" />
+                                <line x1="12" y1="20" x2="12" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="14" />
+                            </svg>
+                            Analytics Desk
+                        </li>
+                        <li class="sidebar-item" id="dash-logout" style="margin-top: 2rem; color: var(--error-color);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            Log Out
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="dashboard-main">
+                    <div id="dash-alert" class="alert hidden"></div>
+
+                    <!-- PANE EVENTS -->
+                    <div id="pane-events">
+                        <div class="dashboard-header">
+                            <div>
+                                <h2 style="font-size: 1.75rem; font-weight: 800;">Manage Events</h2>
+                                <p id="dash-context-subtitle" style="font-size: 0.9rem; color: var(--text-secondary);">
+                                </p>
+                            </div>
+                            <button class="btn btn-primary" id="add-event-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" style="color: white;">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Add Event
+                            </button>
+                        </div>
+                        <div class="table-panel" style="margin-top: 1.5rem;">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Event Title</th>
+                                            <th id="th-dept" class="hidden">Dept</th>
+                                            <th>Category</th>
+                                            <th>Event Date</th>
+                                            <th>Venue</th>
+                                            <th>Status</th>
+                                            <th style="text-align: center;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-events-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANE REGISTRATIONS -->
+                    <div id="pane-registrations" class="hidden">
+                        <div class="dashboard-header">
+                            <div>
+                                <h2 style="font-size: 1.75rem; font-weight: 800;">Participant Registrations</h2>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Select event to view,
+                                    search, check-in, and download lists</p>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-outline" id="btn-reg-export-excel"
+                                    title="Export current grid to Excel">
+                                    Export Excel
+                                </button>
+                                <button class="btn btn-outline" id="btn-reg-export-pdf"
+                                    title="Compile participants into PDF summary">
+                                    Download PDF
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filters-panel glass-panel" style="margin-top: 1rem; padding: 1rem;">
+                            <div class="filter-selects" style="grid-template-columns: 2fr 1fr;">
+                                <select id="reg-event-select" class="filter-select" style="font-weight: 600;">
+                                    <!-- Dynamic list of events -->
+                                </select>
+                                <input type="text" id="reg-search-input" placeholder="Search by name, email or ID..."
+                                    class="search-input" style="padding: 0.5rem 1rem;">
+                            </div>
+                        </div>
+                        <div class="table-panel" style="margin-top: 1rem;">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Email</th>
+                                            <th>Ticket ID</th>
+                                            <th>Department</th>
+                                            <th>Paid Fee?</th>
+                                            <th style="text-align: center;">Checked-In?</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-registrations-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANE DEPARTMENTS -->
+                    <div id="pane-depts" class="hidden">
+                        <div class="dashboard-header">
+                            <div>
+                                <h2 style="font-size: 1.75rem; font-weight: 800;">Manage Departments</h2>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Configure RIT college
+                                    department codes and layouts</p>
+                            </div>
+                            <button class="btn btn-primary" id="add-dept-btn">
+                                Add Department
+                            </button>
+                        </div>
+                        <div class="table-panel" style="margin-top: 1.5rem;">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Department Name</th>
+                                            <th>Banner Image Link</th>
+                                            <th style="max-width: 250px;">Description</th>
+                                            <th style="text-align: center;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-depts-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANE ADMINS -->
+                    <div id="pane-admins" class="hidden">
+                        <div class="dashboard-header">
+                            <div>
+                                <h2 style="font-size: 1.75rem; font-weight: 800;">Department Admins</h2>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Manage authorized login
+                                    credentials and department permissions</p>
+                            </div>
+                            <button class="btn btn-primary" id="add-admin-btn">
+                                Add Coordinator
+                            </button>
+                        </div>
+                        <div class="table-panel" style="margin-top: 1.5rem;">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Department Access</th>
+                                            <th>Role</th>
+                                            <th style="text-align: center;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-admins-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANE AUDIT LOGS -->
+                    <div id="pane-logs" class="hidden">
+                        <div class="dashboard-header">
+                            <div>
+                                <h2 style="font-size: 1.75rem; font-weight: 800;">Audit Logs & System Actions</h2>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Trace real-time operator
+                                    activities, changes, and security warnings</p>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-outline" id="btn-logs-export"
+                                    title="Export logs history to Excel file">
+                                    Export Excel
+                                </button>
+                                <button class="btn btn-danger" id="btn-logs-clear" title="Clear logs from database">
+                                    Clear History
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filters-panel glass-panel" style="margin-top: 1rem; padding: 1rem;">
+                            <div class="filter-selects"
+                                style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                                <input type="text" id="logs-search"
+                                    placeholder="Search by name, action or log details..." class="search-input"
+                                    style="padding: 0.5rem 1rem;">
+                                <select id="logs-filter-dept" class="filter-select" style="padding: 0.5rem 1rem;">
+                                    <option value="">All Departments</option>
+                                </select>
+                                <input type="date" id="logs-filter-date" class="filter-select"
+                                    style="padding: 0.5rem 1rem;" title="Filter by date">
+                            </div>
+                        </div>
+                        <div class="table-panel" style="margin-top: 1rem;">
+                            <div class="table-responsive">
+                                <table class="data-table" style="font-size: 0.8rem;">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>Operator</th>
+                                            <th>Department</th>
+                                            <th>IP Address</th>
+                                            <th>Environment (Browser/OS)</th>
+                                            <th>Action Executed</th>
+                                            <th>Change Details (Before &rarr; After)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-logs-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Database Backup / Restore Module -->
+                        <div class="glass-panel" style="margin-top: 2rem; padding: 1.5rem; border-radius: 16px;">
+                            <h3
+                                style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" style="color: var(--accent-gold);">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                                    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+                                    <path d="M3 12A9 3 0 0 0 21 12" />
+                                </svg>
+                                College Database Backup & Security Maintenance
+                            </h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                                Download raw system state data as a secure backup JSON or restore college data snapshots
+                                instantly.</p>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <button class="btn btn-outline" id="btn-backup-db"
+                                    style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg>
+                                    Download System Backup (.json)
+                                </button>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <button class="btn btn-primary" id="btn-restore-trigger"
+                                        onclick="document.getElementById('db-restore-file').click()"
+                                        style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                            <polyline points="17 8 12 3 7 8" />
+                                            <line x1="12" y1="3" x2="12" y2="15" />
+                                        </svg>
+                                        Restore Database Snapshot
+                                    </button>
+                                    <input type="file" id="db-restore-file" style="display: none;" accept=".json">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pane-analytics" class="hidden">
+                        <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem;">Analytics & Statistics
+                            Desk</h2>
+                        <div class="stats-container" style="margin-bottom: 2rem;">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="dash-stat-total">0</h3>
+                                    <p>Filtered Events</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--success-color);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="8" r="7" />
+                                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="dash-stat-upcoming">0</h3>
+                                    <p>Upcoming Events</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--text-muted);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="dash-stat-completed">0</h3>
+                                    <p>Completed Archives</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="charts-grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem;">
+                            <div class="chart-card" id="chart-dept-wrapper">
+                                <h4>Events distribution by Department</h4>
+                                <div style="position: relative; height: 260px; width: 100%;">
+                                    <canvas id="canvas-dept-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Academic Year Growth Timeline</h4>
+                                <div style="position: relative; height: 260px; width: 100%;">
+                                    <canvas id="canvas-year-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Monthly Scheduling Velocity</h4>
+                                <div style="position: relative; height: 260px; width: 100%;">
+                                    <canvas id="canvas-month-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Engagement Leaderboard (Most Popular Activities)</h4>
+                                <div style="position: relative; height: 260px; width: 100%;">
+                                    <canvas id="canvas-popular-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="event-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Create New Event</h3>
+                <button id="modal-close-btn"
+                    style="background: none; border: none; cursor: pointer; color: var(--text-secondary);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <form id="event-form">
+                <div class="form-grid">
+                    <div class="form-group span-2">
+                        <label class="form-label">Event Title *</label>
+                        <input type="text" id="form-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department *</label>
+                        <select id="form-dept" class="form-control" required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Academic Year *</label>
+                        <select id="form-year" class="form-control" required>
+                            <option value="2025-2026">2025-2026</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2023-2024">2023-2024</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category *</label>
+                        <select id="form-category" class="form-control" required>
+                            <option value="Technical">Technical</option>
+                            <option value="Non Technical">Non Technical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Registration Fees</label>
+                        <input type="text" id="form-fees" placeholder="e.g. Free or Rs. 100" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Event Date *</label>
+                        <input type="date" id="form-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Event Time (24h) *</label>
+                        <input type="text" id="form-time" placeholder="e.g. 10:00:00" class="form-control" required>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Venue *</label>
+                        <input type="text" id="form-venue" placeholder="e.g. CSE Seminar Hall" class="form-control"
+                            required>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Event Description *</label>
+                        <textarea id="form-desc" rows="3" class="form-control" style="resize: vertical;"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Registration Deadline *</label>
+                        <input type="date" id="form-deadline" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Registration Link</label>
+                        <input type="url" id="form-reglink" placeholder="https://forms.gle/..." class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Faculty Coordinator</label>
+                        <input type="text" id="form-faculty" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Student Coordinator</label>
+                        <input type="text" id="form-student" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Number 1 *</label>
+                        <input type="tel" id="form-contact-1" class="form-control" placeholder="Primary Contact"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Number 2</label>
+                        <input type="tel" id="form-contact-2" class="form-control" placeholder="Secondary Contact">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Number 3</label>
+                        <input type="tel" id="form-contact-3" class="form-control" placeholder="Alternative Contact">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Publish Status *</label>
+                        <select id="form-status" class="form-control" required>
+                            <option value="Draft">Draft (Private)</option>
+                            <option value="Pending Approval">Pending Approval (HOD Review)</option>
+                            <option value="Published">Published (Public)</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Poster Image Link (URL)</label>
+                        <input type="url" id="form-poster" placeholder="https://images.unsplash.com/..."
+                            class="form-control">
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Payment QR Image Link (URL)</label>
+                        <input type="url" id="form-qr" placeholder="https://api.qrserver.com/..." class="form-control">
+                    </div>
+                </div>
+                <div
+                    style="display: flex; gap: 1rem; justify-content: flex-end; marginTop: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <button type="button" class="btn btn-outline" id="form-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="form-submit-btn">Publish Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DEPARTMENT MODAL -->
+    <div id="dept-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="dept-modal-title">Add New Department</h3>
+                <button id="dept-modal-close-btn"
+                    style="background: none; border: none; cursor: pointer; color: var(--text-secondary);"
+                    onclick="document.getElementById('dept-modal').classList.add('hidden')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <form id="dept-form">
+                <div class="form-group">
+                    <label class="form-label">Department Code (Uppercase) *</label>
+                    <input type="text" id="dept-form-code" placeholder="e.g. CSE, IT, MBA" class="form-control" required
+                        style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Department Title *</label>
+                    <input type="text" id="dept-form-name" placeholder="e.g. Computer Science Engineering"
+                        class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Banner Image URL *</label>
+                    <input type="url" id="dept-form-banner" placeholder="https://images.unsplash.com/... or base64"
+                        class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Brief Description *</label>
+                    <textarea id="dept-form-desc" rows="3" class="form-control" required></textarea>
+                </div>
+                <div
+                    style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <button type="button" class="btn btn-outline"
+                        onclick="document.getElementById('dept-modal').classList.add('hidden')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="dept-form-submit-btn">Save Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div id="admin-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="admin-modal-title">Create Coordinator Account</h3>
+                <button id="admin-modal-close-btn"
+                    style="background: none; border: none; cursor: pointer; color: var(--text-secondary);"
+                    onclick="document.getElementById('admin-modal').classList.add('hidden')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <form id="admin-form">
+                <div class="form-group">
+                    <label class="form-label">Account Coordinator Full Name *</label>
+                    <input type="text" id="admin-form-name" placeholder="e.g. Prof. R. K. Patil" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Username (Sign In Credential) *</label>
+                    <input type="text" id="admin-form-user" placeholder="e.g. cseadmin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password *</label>
+                    <input type="password" id="admin-form-pass" placeholder="Enter secure password" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Role Category *</label>
+                    <select id="admin-form-role" class="form-control" required>
+                        <option value="dept_admin">Department Administrator</option>
+                        <option value="super_admin">Super Administrator</option>
+                    </select>
+                </div>
+                <div class="form-group" id="admin-form-dept-group">
+                    <label class="form-label">Assigned College Department *</label>
+                    <select id="admin-form-dept" class="form-control">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+                <div
+                    style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <button type="button" class="btn btn-outline"
+                        onclick="document.getElementById('admin-modal').classList.add('hidden')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="admin-form-submit-btn">Save Coordinator</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- REGISTRATION MODAL -->
+    <div id="register-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header">
+                <h3 id="reg-modal-title">Event Registration Desk</h3>
+                <button style="background: none; border: none; cursor: pointer; color: var(--text-secondary);"
+                    onclick="document.getElementById('register-modal').classList.add('hidden')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <form id="public-reg-form">
+                <p id="reg-modal-fees-notice"
+                    style="font-size: 0.9rem; font-weight: 600; color: var(--accent-gold); margin-bottom: 1rem;">Entry
+                    Fee: Free</p>
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" id="reg-form-name" placeholder="Enter your full name" class="form-control"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" id="reg-form-email" placeholder="student@rit.edu" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Student Department *</label>
+                    <select id="reg-form-dept" class="form-control" required>
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+                <div id="reg-form-payment-area" class="hidden"
+                    style="border: 1px dashed var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; text-align: center;">
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">This event has
+                        entry fees. Scan the QR code below using any UPI app and fill in the Transaction ID.</p>
+                    <img id="reg-form-payment-qr" src="" alt="Payment QR"
+                        style="width: 130px; height: 130px; border-radius: 8px; margin: 0 auto 0.5rem; display: block; border: 1px solid var(--border-color);">
+                    <div class="form-group" style="text-align: left; max-width: 250px; margin: 0 auto;">
+                        <label class="form-label">UPI Transaction Reference ID *</label>
+                        <input type="text" id="reg-form-txid" placeholder="12-digit UPI Ref No." class="form-control"
+                            style="font-size: 0.85rem; padding: 0.5rem;">
+                    </div>
+                </div>
+                <div
+                    style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <button type="button" class="btn btn-outline"
+                        onclick="document.getElementById('register-modal').classList.add('hidden')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="reg-form-submit-btn">Submit Registration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TICKET MODAL -->
+    <div id="ticket-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 480px; padding: 2rem;">
+            <div class="modal-header">
+                <h3 style="font-weight: 700;">Registration Successful!</h3>
+                <button style="background: none; border: none; cursor: pointer; color: var(--text-secondary);"
+                    onclick="document.getElementById('ticket-modal').classList.add('hidden')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div id="ticket-content" class="glass-panel"
+                style="padding: 1.5rem; border-radius: 16px; background-color: white; color: black; border: 2px solid var(--accent-color); font-family: sans-serif; text-shadow: none;">
+                <!-- Ticket details injected dynamically -->
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+                <button class="btn btn-outline" id="btn-print-ticket">Print Ticket Receipt</button>
+                <button class="btn btn-primary"
+                    onclick="document.getElementById('ticket-modal').classList.add('hidden')">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer no-print">
+        <div><strong>Rajarambapu Institute of Technology (RIT)</strong></div>
+        <div style="font-size: 0.85rem;">Rajaramnagar, Islampur, Maharashtra, India.</div>
+        <div class="footer-credits">
+            &copy; <span id="footer-year">2026</span> RIT Central Event Management Portal. All rights reserved.
+            <br>
+            Built for Academic Demonstrations with HTML, CSS, JavaScript, Node & MySQL.
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
