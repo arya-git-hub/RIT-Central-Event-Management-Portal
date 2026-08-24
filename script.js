@@ -473,7 +473,7 @@ function updateBreadcrumbs(viewName, params = {}) {
   }
 }
 
-function navigateTo(viewName, params = {}, push = true) {
+function navigateTo(viewName, params = {}, push = true, skipScroll = false) {
   appState.activeView = viewName;
   appState.params = params;
 
@@ -512,7 +512,9 @@ function navigateTo(viewName, params = {}, push = true) {
   // Insert breadcrumb trails
   updateBreadcrumbs(viewName, params);
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!skipScroll) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   // Execute view triggers
   switch (viewName) {
@@ -2990,16 +2992,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const scrollToSection = (sectionId, navLinkId) => {
-    navigateTo('home');
+    if (appState.activeView !== 'home') {
+      navigateTo('home', {}, true, true);
+    }
+    document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
+    const activeLink = document.getElementById(navLinkId);
+    if (activeLink) activeLink.classList.add('active');
     setTimeout(() => {
-      document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
-      const activeLink = document.getElementById(navLinkId);
-      if (activeLink) activeLink.classList.add('active');
       const el = document.getElementById(sectionId);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const yOffset = -90; // offset to clear sticky navbar
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
-    }, 150);
+    }, 100);
   };
 
   // Header Nav listeners
