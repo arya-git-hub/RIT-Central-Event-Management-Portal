@@ -2989,9 +2989,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('nav-login').classList.add('hidden');
   }
 
+  const scrollToSection = (sectionId, navLinkId) => {
+    navigateTo('home');
+    setTimeout(() => {
+      document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
+      const activeLink = document.getElementById(navLinkId);
+      if (activeLink) activeLink.classList.add('active');
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 150);
+  };
+
   // Header Nav listeners
   document.getElementById('nav-logo').onclick = () => navigateTo('home');
   document.getElementById('nav-home').onclick = () => navigateTo('home');
+  document.getElementById('nav-upcoming-link').onclick = () => scrollToSection('sec-upcoming', 'nav-upcoming-link');
+  document.getElementById('nav-calendar-link').onclick = () => scrollToSection('sec-calendar', 'nav-calendar-link');
+  document.getElementById('nav-departments-link').onclick = () => scrollToSection('sec-departments', 'nav-departments-link');
   document.getElementById('nav-login').onclick = () => navigateTo('login');
   document.getElementById('nav-dashboard').onclick = () => navigateTo('dashboard');
   const navCert = document.getElementById('nav-certificates');
