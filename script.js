@@ -974,7 +974,7 @@ function renderDepartmentGallery(deptEvents) {
   const galleryGrid = document.getElementById('dept-gallery-grid');
   galleryGrid.innerHTML = '';
 
-  const eventsWithImages = deptEvents.filter(e => e.poster_image || (e.gallery_images && e.gallery_images.length > 0));
+  const eventsWithImages = deptEvents.filter(e => e.gallery_images && e.gallery_images.length > 0);
 
   if (eventsWithImages.length === 0) {
     galleryGrid.innerHTML = `
@@ -1027,9 +1027,6 @@ function renderDepartmentGallery(deptEvents) {
 
       // Collect all images for this event
       const imgs = [];
-      if (activeEvent.poster_image) {
-        imgs.push({ src: activeEvent.poster_image, title: activeEvent.title });
-      }
       if (activeEvent.gallery_images && Array.isArray(activeEvent.gallery_images)) {
         activeEvent.gallery_images.forEach((imgSrc, idx) => {
           imgs.push({ src: imgSrc, title: `${activeEvent.title} (Photo ${idx + 1})` });
@@ -1073,7 +1070,7 @@ function renderDepartmentGallery(deptEvents) {
 
   eventsWithImages.forEach(e => {
     // Collect all images to count them
-    const imgsCount = (e.poster_image ? 1 : 0) + (e.gallery_images ? e.gallery_images.length : 0);
+    const imgsCount = e.gallery_images ? e.gallery_images.length : 0;
     const coverImage = e.poster_image || (e.gallery_images && e.gallery_images[0]) || '';
 
     const folderCard = document.createElement('div');
