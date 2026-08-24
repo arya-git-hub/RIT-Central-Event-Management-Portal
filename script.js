@@ -5,6 +5,7 @@
 // --- 1. INITIAL STATE & SEED DATABASE SYSTEM ---
 
 const DEFAULT_DEPARTMENTS = [
+  { id: 10, name: 'Computer Science & Information Technology', code: 'CSIT', banner_image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on computing infrastructure, software development, data communication, and modern information systems.' },
   { id: 1, name: 'Computer Science Engineering', code: 'CSE', banner_image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on high-quality technical education, algorithmic thinking, software engineering, and innovative project-based learning.' },
   { id: 2, name: 'Artificial Intelligence & Machine Learning', code: 'AIML', banner_image: 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=1200&auto=format&fit=crop&q=80', description: 'Equips students with core intelligence technologies, data analysis models, deep learning, and advanced automation.' },
   { id: 3, name: 'Mechanical Engineering', code: 'MECH', banner_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1200&auto=format&fit=crop&q=80', description: 'Foundational department focusing on thermodynamics, machine design, CAD/CAM, and automotive robotics.' },
@@ -13,8 +14,7 @@ const DEFAULT_DEPARTMENTS = [
   { id: 6, name: 'Electronics Engineering', code: 'ENTC', banner_image: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41b7?w=1200&auto=format&fit=crop&q=80', description: 'Microprocessors, VLSI design, communication technology, embedded systems and signal processing.' },
   { id: 7, name: 'MCA (Computer Applications)', code: 'MCA', banner_image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&auto=format&fit=crop&q=80', description: 'Post-graduate program in software engineering, database management, and advanced computing paradigms.' },
   { id: 8, name: 'MBA (Business Administration)', code: 'MBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Specialized management studies covering marketing strategy, corporate finance, operations, and HR systems.' },
-  { id: 9, name: 'BBA (Business Administration)', code: 'BBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Undergraduate business management studies focusing on corporate leadership, marketing tactics, finance, and HR management.' },
-  { id: 10, name: 'Computer Science & Information Technology', code: 'CSIT', banner_image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on computing infrastructure, software development, data communication, and modern information systems.' }
+  { id: 9, name: 'BBA (Business Administration)', code: 'BBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Undergraduate business management studies focusing on corporate leadership, marketing tactics, finance, and HR management.' }
 ];
 
 const DEFAULT_USERS = [
@@ -214,6 +214,35 @@ const DEFAULT_EVENTS = [
     status: 'Published',
     views: 47,
     downloads: 9
+  },
+  {
+    id: 9,
+    title: 'CodeDash',
+    description: 'A premium coding competition and tech-symposium for Computer Science & Information Technology students showcasing logical thinking, problem-solving, and speed coding contests.',
+    department_id: 10,
+    academic_year: '2024-2025',
+    category: 'Technical',
+    event_date: '2025-02-25',
+    event_time: '10:00',
+    venue: 'RIT CSIT Advanced Lab',
+    registration_deadline: '2025-02-23',
+    registration_link: '',
+    payment_qr: '',
+    fees: 'Free',
+    faculty_coordinator: 'Dr. S. R. Patil',
+    student_coordinator: 'Vinay Kulkarni',
+    contact_1: '9111222333',
+    contact_2: '',
+    contact_3: '',
+    poster_image: 'assets/codedash/pic1.jpg',
+    gallery_images: [
+      'assets/codedash/pic2.jpg',
+      'assets/codedash/pic3.jpg',
+      'assets/codedash/pic4.jpg'
+    ],
+    status: 'Published',
+    views: 245,
+    downloads: 68
   }
 ];
 
@@ -243,7 +272,8 @@ const appState = {
   darkMode: false,
   heroIndex: 0,
   heroInterval: null,
-  currentCalendarDate: new Date(2026, 7, 20) // August 2026 (matching system date context)
+  currentCalendarDate: new Date(2026, 7, 20), // August 2026 (matching system date context)
+  activeGalleryEventId: null
 };
 
 // Global chart references to allow clean destruction and avoid canvas conflicts
@@ -257,7 +287,20 @@ function initDatabase() {
   // Clear stale local storage format to force migration (BBA addition and year formats update)
   const storedDepts = localStorage.getItem('rit_departments');
   const storedEvents = localStorage.getItem('rit_events');
-  if (storedDepts && (!storedDepts.includes('CSIT') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
+
+  let needsReset = false;
+  if (storedDepts) {
+    try {
+      const parsed = JSON.parse(storedDepts);
+      if (parsed.length > 0 && parsed[0].code !== 'CSIT') {
+        needsReset = true;
+      }
+    } catch (e) {
+      needsReset = true;
+    }
+  }
+
+  if (storedDepts && (!storedDepts.includes('CSIT') || needsReset || !storedEvents || !storedEvents.includes('CodeDash') || !storedEvents.includes('2025-02-25') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
     localStorage.removeItem('rit_departments');
     localStorage.removeItem('rit_users');
     localStorage.removeItem('rit_events');
@@ -710,6 +753,8 @@ function loadDepartmentView(deptId) {
     return;
   }
 
+  appState.activeGalleryEventId = null;
+
   const deptEvents = events.filter(e => e.department_id === dept.id && e.status === 'Published');
   const bannerBox = document.getElementById('dept-banner-box');
   bannerBox.innerHTML = `
@@ -893,41 +938,167 @@ function loadDepartmentView(deptId) {
   }
 
   // 4. Gallery Panel (Grid and Lightbox preview support)
+  renderDepartmentGallery(deptEvents);
+}
+
+function renderDepartmentGallery(deptEvents) {
   const galleryGrid = document.getElementById('dept-gallery-grid');
   galleryGrid.innerHTML = '';
-  
-  if (deptEvents.length === 0) {
+
+  const eventsWithImages = deptEvents.filter(e => e.poster_image || (e.gallery_images && e.gallery_images.length > 0));
+
+  if (eventsWithImages.length === 0) {
     galleryGrid.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
+      <div style="text-align: center; padding: 3rem; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
         <p style="color: var(--text-secondary)">No images in department gallery.</p>
       </div>
     `;
     return;
   }
 
-  deptEvents.forEach(e => {
-    if (!e.poster_image) return;
-    const box = document.createElement('div');
-    box.style.position = 'relative';
-    box.style.borderRadius = '12px';
-    box.style.overflow = 'hidden';
-    box.style.height = '160px';
-    box.style.boxShadow = 'var(--card-shadow)';
-    box.style.border = '1px solid var(--border-color)';
-    box.style.cursor = 'zoom-in';
-    box.className = 'select-none';
-    
-    // Lightbox image trigger
-    box.onclick = () => launchLightbox(e.poster_image, e.title);
+  // If a specific event album folder is open:
+  if (appState.activeGalleryEventId) {
+    const activeEvent = eventsWithImages.find(e => e.id === appState.activeGalleryEventId);
+    if (activeEvent) {
+      // Render back button and event photos grid
+      const backBtn = document.createElement('button');
+      backBtn.className = 'btn btn-outline';
+      backBtn.style.marginBottom = '1.5rem';
+      backBtn.style.display = 'flex';
+      backBtn.style.alignItems = 'center';
+      backBtn.style.gap = '0.5rem';
+      backBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+        </svg>
+        Back to Albums
+      `;
+      backBtn.onclick = () => {
+        appState.activeGalleryEventId = null;
+        renderDepartmentGallery(deptEvents);
+      };
 
-    box.innerHTML = `
-      <img src="${e.poster_image}" alt="${e.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
-      <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 0.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; font-size: 0.75rem; font-weight: 500;">
-        ${e.title}
+      const header = document.createElement('h3');
+      header.style.fontSize = '1.25rem';
+      header.style.fontWeight = '700';
+      header.style.color = 'var(--text-primary)';
+      header.style.marginBottom = '1.25rem';
+      header.style.borderLeft = '4px solid var(--accent-color)';
+      header.style.paddingLeft = '0.75rem';
+      header.style.textTransform = 'uppercase';
+      header.style.letterSpacing = '0.05em';
+      header.innerText = activeEvent.title;
+
+      const grid = document.createElement('div');
+      grid.style.display = 'grid';
+      grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(220px, 1fr))';
+      grid.style.gap = '1.25rem';
+
+      // Collect all images for this event
+      const imgs = [];
+      if (activeEvent.poster_image) {
+        imgs.push({ src: activeEvent.poster_image, title: activeEvent.title });
+      }
+      if (activeEvent.gallery_images && Array.isArray(activeEvent.gallery_images)) {
+        activeEvent.gallery_images.forEach((imgSrc, idx) => {
+          imgs.push({ src: imgSrc, title: `${activeEvent.title} (Photo ${idx + 1})` });
+        });
+      }
+
+      imgs.forEach(imgData => {
+        const box = document.createElement('div');
+        box.style.position = 'relative';
+        box.style.borderRadius = '12px';
+        box.style.overflow = 'hidden';
+        box.style.height = '160px';
+        box.style.boxShadow = 'var(--card-shadow)';
+        box.style.border = '1px solid var(--border-color)';
+        box.style.cursor = 'zoom-in';
+        box.className = 'select-none';
+        
+        box.onclick = () => launchLightbox(imgData.src, imgData.title);
+
+        box.innerHTML = `
+          <img src="${imgData.src}" alt="${imgData.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+          <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 0.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; font-size: 0.75rem; font-weight: 500;">
+            ${imgData.title}
+          </div>
+        `;
+        grid.appendChild(box);
+      });
+
+      galleryGrid.appendChild(backBtn);
+      galleryGrid.appendChild(header);
+      galleryGrid.appendChild(grid);
+      return;
+    }
+  }
+
+  // Otherwise, render folders/albums list:
+  const folderGrid = document.createElement('div');
+  folderGrid.style.display = 'grid';
+  folderGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
+  folderGrid.style.gap = '1.5rem';
+
+  eventsWithImages.forEach(e => {
+    // Collect all images to count them
+    const imgsCount = (e.poster_image ? 1 : 0) + (e.gallery_images ? e.gallery_images.length : 0);
+    const coverImage = e.poster_image || (e.gallery_images && e.gallery_images[0]) || '';
+
+    const folderCard = document.createElement('div');
+    folderCard.className = 'gallery-folder-card glass-panel select-none';
+    folderCard.style.cursor = 'pointer';
+    folderCard.style.borderRadius = '16px';
+    folderCard.style.overflow = 'hidden';
+    folderCard.style.border = '1px solid var(--border-color)';
+    folderCard.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+    folderCard.style.backgroundColor = 'var(--bg-secondary)';
+    
+    // Add nice hover effects programmatically
+    folderCard.onmouseenter = () => {
+      folderCard.style.transform = 'translateY(-4px)';
+      folderCard.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.15)';
+    };
+    folderCard.onmouseleave = () => {
+      folderCard.style.transform = 'translateY(0)';
+      folderCard.style.boxShadow = 'var(--card-shadow)';
+    };
+
+    folderCard.onclick = () => {
+      appState.activeGalleryEventId = e.id;
+      renderDepartmentGallery(deptEvents);
+    };
+
+    folderCard.innerHTML = `
+      <div style="position: relative; height: 160px; overflow: hidden; background-color: #f1f5f9;">
+        ${coverImage ? `<img src="${coverImage}" alt="${e.title}" style="width: 100%; height: 100%; object-fit: cover;">` : ''}
+        <div style="position: absolute; top: 12px; right: 12px; background-color: rgba(15, 23, 42, 0.85); color: white; padding: 0.25rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 0.25rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="9" cy="9" r="2"/>
+            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+          </svg>
+          ${imgsCount}
+        </div>
+      </div>
+      <div style="padding: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+        <div style="background-color: rgba(99, 102, 241, 0.1); color: var(--accent-color); padding: 0.5rem; border-radius: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>
+          </svg>
+        </div>
+        <div style="overflow: hidden; flex-grow: 1;">
+          <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${e.title}</h4>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); display: block; margin-top: 0.2rem;">Event Photo Album</span>
+        </div>
       </div>
     `;
-    galleryGrid.appendChild(box);
+    folderGrid.appendChild(folderCard);
   });
+
+  galleryGrid.appendChild(folderGrid);
 }
 
 function launchLightbox(imgSrc, title) {
