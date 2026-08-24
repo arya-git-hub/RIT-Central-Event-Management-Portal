@@ -243,6 +243,35 @@ const DEFAULT_EVENTS = [
     status: 'Published',
     views: 245,
     downloads: 68
+  },
+  {
+    id: 10,
+    title: 'ORION 2026',
+    description: 'Electronics and Telecommunication Engineering Students\' Association (ETESA) presents ORION 2026. Featuring Robo-Race (Group of 2, Entry Fee: Rs. 200 per group) and Shark Tank (Group of 1-4, Entry Fee: Rs. 120 per person) contests with a total prize pool of Rs. 25,000.',
+    department_id: 6,
+    academic_year: '2025-2026',
+    category: 'Technical',
+    event_date: '2026-02-26',
+    event_time: '09:00',
+    venue: 'ETC Department',
+    registration_deadline: '2026-02-24',
+    registration_link: '',
+    payment_qr: '',
+    fees: 'Robo-Race: Rs. 200/Group, Shark Tank: Rs. 120/Person',
+    faculty_coordinator: 'Prof. D. M. Mali',
+    student_coordinator: 'Shreyash Kore / Shravani Jadhav',
+    contact_1: '8055747576 (Robo-Race)',
+    contact_2: '7798699697 (Shark Tank)',
+    contact_3: '9370307376 (Rohan Kadam)',
+    poster_image: 'assets/orion/poster.jpg',
+    gallery_images: [
+      'assets/orion/pic1.png',
+      'assets/orion/pic2.png',
+      'assets/orion/pic3.png'
+    ],
+    status: 'Published',
+    views: 85,
+    downloads: 12
   }
 ];
 
@@ -300,7 +329,7 @@ function initDatabase() {
     }
   }
 
-  if (storedDepts && (!storedDepts.includes('CSIT') || needsReset || !storedEvents || !storedEvents.includes('CodeDash') || !storedEvents.includes('2025-02-25') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
+  if (storedDepts && (!storedDepts.includes('CSIT') || needsReset || !storedEvents || !storedEvents.includes('CodeDash') || !storedEvents.includes('2025-02-25') || !storedEvents.includes('ORION') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
     localStorage.removeItem('rit_departments');
     localStorage.removeItem('rit_users');
     localStorage.removeItem('rit_events');
