@@ -14,7 +14,9 @@ const DEFAULT_DEPARTMENTS = [
   { id: 6, name: 'Electronics Engineering', code: 'ENTC', banner_image: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41b7?w=1200&auto=format&fit=crop&q=80', description: 'Microprocessors, VLSI design, communication technology, embedded systems and signal processing.' },
   { id: 7, name: 'MCA (Computer Applications)', code: 'MCA', banner_image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&auto=format&fit=crop&q=80', description: 'Post-graduate program in software engineering, database management, and advanced computing paradigms.' },
   { id: 8, name: 'MBA (Business Administration)', code: 'MBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Specialized management studies covering marketing strategy, corporate finance, operations, and HR systems.' },
-  { id: 9, name: 'BBA (Business Administration)', code: 'BBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Undergraduate business management studies focusing on corporate leadership, marketing tactics, finance, and HR management.' }
+  { id: 9, name: 'BBA (Business Administration)', code: 'BBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Undergraduate business management studies focusing on corporate leadership, marketing tactics, finance, and HR management.' },
+  { id: 11, name: 'Robotics and Automation', code: 'ROBOTICS', banner_image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&auto=format&fit=crop&q=80', description: 'Covers autonomous systems, industrial automation, robotic kinematics, machine vision, and control algorithms.' },
+  { id: 12, name: 'Mechatronics Engineering', code: 'MECHATRONICS', banner_image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&auto=format&fit=crop&q=80', description: 'Synergistic integration of mechanical engineering, electronics, control systems, and computer science to design smart systems.' }
 ];
 
 const DEFAULT_USERS = [
@@ -329,7 +331,7 @@ function initDatabase() {
     }
   }
 
-  if (storedDepts && (!storedDepts.includes('CSIT') || needsReset || !storedEvents || !storedEvents.includes('CodeDash') || !storedEvents.includes('2025-02-25') || !storedEvents.includes('ORION') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
+  if (storedDepts && (!storedDepts.includes('CSIT') || !storedDepts.includes('Robotics') || needsReset || !storedEvents || !storedEvents.includes('CodeDash') || !storedEvents.includes('2025-02-25') || !storedEvents.includes('ORION') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
     localStorage.removeItem('rit_departments');
     localStorage.removeItem('rit_users');
     localStorage.removeItem('rit_events');
