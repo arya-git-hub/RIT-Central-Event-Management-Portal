@@ -5,18 +5,22 @@
 // --- 1. INITIAL STATE & SEED DATABASE SYSTEM ---
 
 const DEFAULT_DEPARTMENTS = [
-  { id: 10, name: 'Computer Science & Information Technology', code: 'CSIT', banner_image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on computing infrastructure, software development, data communication, and modern information systems.' },
-  { id: 1, name: 'Computer Science Engineering', code: 'CSE', banner_image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on high-quality technical education, algorithmic thinking, software engineering, and innovative project-based learning.' },
-  { id: 2, name: 'Artificial Intelligence & Machine Learning', code: 'AIML', banner_image: 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=1200&auto=format&fit=crop&q=80', description: 'Equips students with core intelligence technologies, data analysis models, deep learning, and advanced automation.' },
-  { id: 3, name: 'Mechanical Engineering', code: 'MECH', banner_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1200&auto=format&fit=crop&q=80', description: 'Foundational department focusing on thermodynamics, machine design, CAD/CAM, and automotive robotics.' },
-  { id: 4, name: 'Civil Engineering', code: 'CIVIL', banner_image: 'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on structural design, environmental engineering, surveying, and modern architectural infrastructures.' },
-  { id: 5, name: 'Electrical Engineering', code: 'ELECTRICAL', banner_image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&q=80', description: 'Power systems engineering, smart grids, electrical machines, and clean renewable energy solutions.' },
-  { id: 6, name: 'Electronics Engineering', code: 'ENTC', banner_image: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41b7?w=1200&auto=format&fit=crop&q=80', description: 'Microprocessors, VLSI design, communication technology, embedded systems and signal processing.' },
-  { id: 7, name: 'MCA (Computer Applications)', code: 'MCA', banner_image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&auto=format&fit=crop&q=80', description: 'Post-graduate program in software engineering, database management, and advanced computing paradigms.' },
-  { id: 8, name: 'MBA (Business Administration)', code: 'MBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Specialized management studies covering marketing strategy, corporate finance, operations, and HR systems.' },
-  { id: 9, name: 'BBA (Business Administration)', code: 'BBA', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Undergraduate business management studies focusing on corporate leadership, marketing tactics, finance, and HR management.' },
-  { id: 11, name: 'Robotics and Automation', code: 'ROBOTICS', banner_image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&auto=format&fit=crop&q=80', description: 'Covers autonomous systems, industrial automation, robotic kinematics, machine vision, and control algorithms.' },
-  { id: 12, name: 'Mechatronics Engineering', code: 'MECHATRONICS', banner_image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&auto=format&fit=crop&q=80', description: 'Synergistic integration of mechanical engineering, electronics, control systems, and computer science to design smart systems.' }
+  { id: 1, name: 'Computer Science and Engineering (CSE)', code: 'CSE', banner_image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80', description: 'Empowering students with advanced computing paradigms, software engineering, algorithmic design, and cutting-edge research.' },
+  { id: 2, name: 'CSE (Artificial Intelligence and Machine Learning)', code: 'CSE-AIML', banner_image: 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=1200&auto=format&fit=crop&q=80', description: 'Specializing in deep learning, intelligent autonomous systems, computer vision, data engineering, and modern neural network architectures.' },
+  { id: 10, name: 'Computer Science and Information Technology (CSIT)', code: 'CSIT', banner_image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on enterprise cloud architectures, IT infrastructure, network security, and scalable software solutions.' },
+  { id: 14, name: 'Information Technology (IT)', code: 'IT', banner_image: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&auto=format&fit=crop&q=80', description: 'Advancing information systems, cybersecurity, web technologies, database administration, and software development.' },
+  { id: 3, name: 'Mechanical Engineering', code: 'MECH', banner_image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1200&auto=format&fit=crop&q=80', description: 'Foundational engineering focusing on thermal sciences, CAD/CAM/CAE, manufacturing innovation, fluid mechanics, and machine design.' },
+  { id: 4, name: 'Civil Engineering', code: 'CIVIL', banner_image: 'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?w=1200&auto=format&fit=crop&q=80', description: 'Leading innovations in sustainable infrastructure, structural engineering, surveying, geotechnical engineering, and smart construction.' },
+  { id: 5, name: 'Electrical Engineering', code: 'ELECTRICAL', banner_image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&q=80', description: 'Focuses on electrical power systems, smart grids, industrial power electronics, renewable energy, and electric drives.' },
+  { id: 6, name: 'Electronics and Telecommunication Engineering (E&TC)', code: 'E&TC', banner_image: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41b7?w=1200&auto=format&fit=crop&q=80', description: 'Covers telecommunications, VLSI systems, microcontrollers, embedded IoT devices, digital signal processing, and RF engineering.' },
+  { id: 12, name: 'Mechatronics Engineering', code: 'MECHATRONICS', banner_image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&auto=format&fit=crop&q=80', description: 'A multidisciplinary branch integrating mechanical systems, electronic hardware, control automation, and computer engineering.' },
+  { id: 11, name: 'Robotics and Automation', code: 'ROBOTICS', banner_image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&auto=format&fit=crop&q=80', description: 'Developing autonomous robots, industrial automation systems, sensor integration, robotic kinematics, and AI-driven control.' },
+  { id: 15, name: 'Automotive Technology (Automobile Engineering)', code: 'AUTO', banner_image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&auto=format&fit=crop&q=80', description: 'Specialized studies in automotive design, EV vehicle powertrain systems, IC engines, vehicle dynamics, and aerodynamics.' },
+  { id: 13, name: 'Sciences and Humanities', code: 'FE', banner_image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&auto=format&fit=crop&q=80', description: 'Building rigorous foundational competence for first-year engineering students across applied physics, chemistry, mathematics, and professional communication.' },
+  { id: 8, name: 'Department of Management Studies (MBA / BBA)', code: 'DMS', banner_image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80', description: 'Cultivating leadership, corporate strategy, marketing, finance, human resources, and entrepreneurship.' },
+  { id: 7, name: 'Department of Computer Applications (MCA / BCA)', code: 'MCA-BCA', banner_image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&auto=format&fit=crop&q=80', description: 'Professional computing education focusing on full-stack web and mobile application engineering, database administration, and software methodologies.' },
+  { id: 16, name: 'Department of Design (B.Des)', code: 'DESIGN', banner_image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1200&auto=format&fit=crop&q=80', description: 'Fostering industrial product design, UI/UX aesthetics, design thinking, ergonomic modeling, and creative visual communication.' },
+  { id: 17, name: 'Diploma (Polytechnic) Wing', code: 'DIPLOMA', banner_image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=1200&auto=format&fit=crop&q=80', description: 'Comprehensive polytechnic engineering education imparting hands-on technical skills, workshop mastery, and practical industrial training.' }
 ];
 
 const DEFAULT_USERS = [
@@ -274,6 +278,32 @@ const DEFAULT_EVENTS = [
     status: 'Published',
     views: 85,
     downloads: 12
+  },
+  {
+    id: 11,
+    title: 'FE Induction & Innovation Expo',
+    description: 'Comprehensive orientation and technical project display for first-year engineering students exploring robotics, green energy, smart sensors, and software.',
+    department_id: 13,
+    academic_year: '2025-2026',
+    category: 'Technical',
+    event_date: '2026-09-01',
+    event_time: '10:00',
+    venue: 'RIT Central Auditorium',
+    registration_deadline: '2026-08-30',
+    registration_link: '',
+    payment_qr: '',
+    fees: 'Free',
+    faculty_coordinator: 'Dr. M. S. Kumbhar',
+    student_coordinator: 'Atharva Mane',
+    contact_1: '9421112233',
+    contact_2: '',
+    contact_3: '',
+    poster_image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
+    rules: 'Mandatory participation for all First Year student cohorts.',
+    eligibility: 'First Year B.Tech students.',
+    status: 'Published',
+    views: 190,
+    downloads: 30
   }
 ];
 
@@ -288,12 +318,142 @@ const DEFAULT_LOGS = [
   { timestamp: '2026-08-20T10:15:30Z', user: 'system', department: 'System', ip: '127.0.0.1', env: 'Chrome 128 / Windows 11', action: 'Database Seed', details: 'Initialized data models with default records.' }
 ];
 
+const DEFAULT_ACHIEVEMENTS = [
+  {
+    id: 1,
+    dept_id: 1,
+    badge: 'National Winners (Smart India Hackathon)',
+    title: '1st Prize - SIH 2025 Hardware & Software Edition',
+    desc: 'Team CodeCrafters from CSE won 1st Place with Rs. 1,00,000 cash award for developing an AI-driven disaster response system for the Ministry of Home Affairs.',
+    year: '2024-2025',
+    date: 'Dec 2024'
+  },
+  {
+    id: 2,
+    dept_id: 1,
+    badge: 'Patent Published',
+    title: 'Intellectual Property: Automated Cloud Load Balancing Algorithm',
+    desc: 'Published patent by CSE faculty and final year students on adaptive predictive multi-node resource allocation for container clusters.',
+    year: '2025-2026',
+    date: 'Jan 2026'
+  },
+  {
+    id: 3,
+    dept_id: 10,
+    badge: 'National Tech Symposium Winner',
+    title: 'State Level CodeDash Champion Trophy',
+    desc: 'Secured overall Championship Trophy with 14 podium finishes across algorithmic contests and UI/UX design sprints.',
+    year: '2024-2025',
+    date: 'Feb 2025'
+  },
+  {
+    id: 4,
+    dept_id: 6,
+    badge: 'National Robo-Race 1st Place',
+    title: 'IIT Bombay Techfest & Orion Robo-Race Winners',
+    desc: 'ETESA robotics squad engineered high-torque autonomous obstacle navigators securing Gold at state robotics leagues.',
+    year: '2025-2026',
+    date: 'Feb 2026'
+  },
+  {
+    id: 5,
+    dept_id: 3,
+    badge: 'National Racing Champions',
+    title: 'Formula Student & Go-Kart Championship 1st Rank',
+    desc: 'Best vehicle dynamics, endurance reliability, and fastest campus lap time in the western regional division.',
+    year: '2023-2024',
+    date: 'Feb 2024'
+  },
+  {
+    id: 6,
+    dept_id: 2,
+    badge: 'Kaggle Grandmaster Track',
+    title: 'Top 1% Global Healthcare Vision Hackathon',
+    desc: 'Deep learning team engineered an ultrasound segmentation model with 98.4% diagnostic accuracy published in IEEE symposium.',
+    year: '2025-2026',
+    date: 'Mar 2026'
+  },
+  {
+    id: 7,
+    dept_id: 13,
+    badge: 'Avishkar Research Convention',
+    title: 'State Level Innovation 1st Place (First Year B.Tech)',
+    desc: 'Freshmen innovators showcased eco-friendly bio-plastic packaging from agro-waste winning the Zonal Avishkar Trophy.',
+    year: '2025-2026',
+    date: 'Jan 2026'
+  }
+];
+
+const DEFAULT_COORDINATORS = {
+  1: {
+    faculty: [
+      { name: 'Prof. Amit Patil', role: 'CSE HOD & Chief Faculty Coordinator', email: 'amit.patil@rit.edu', phone: '9876543210', room: 'CSE Block Room 204' },
+      { name: 'Mrs. Priya Deshmukh', role: 'Assistant Professor & Tech Lead', email: 'priya.deshmukh@rit.edu', phone: '9876543212', room: 'CSE Lab 3' }
+    ],
+    students: [
+      { name: 'Rajesh Kulkarni', role: 'Lead Student Organizer (Hack-O-Fiesta)', year: 'B.Tech Final Year CSE', email: 'rajesh.kulkarni@rit.edu', phone: '9876543210' },
+      { name: 'Simran Shaikh', role: 'Coding Contest Coordinator (CodeQuest)', year: 'B.Tech Third Year CSE', email: 'simran.shaikh@rit.edu', phone: '8765432109' }
+    ]
+  },
+  10: {
+    faculty: [
+      { name: 'Dr. S. R. Patil', role: 'CSIT Program Head & Event Mentor', email: 'sr.patil@rit.edu', phone: '9111222333', room: 'CSIT Wing 102' }
+    ],
+    students: [
+      { name: 'Vinay Kulkarni', role: 'CodeDash President', year: 'B.Tech Final Year CSIT', email: 'vinay.k@rit.edu', phone: '9111222333' }
+    ]
+  },
+  6: {
+    faculty: [
+      { name: 'Prof. D. M. Mali', role: 'Faculty Coordinator (ETESA)', email: 'dm.mali@rit.edu', phone: '8055747576', room: 'ETC Wing 201' }
+    ],
+    students: [
+      { name: 'Shreyash Kore', role: 'Robo-Race Coordinator (ORION 2026)', year: 'B.Tech Third Year ENTC', email: 'shreyash.k@rit.edu', phone: '8055747576' },
+      { name: 'Shravani Jadhav', role: 'Shark Tank Coordinator', year: 'B.Tech Third Year ENTC', email: 'shravani.j@rit.edu', phone: '7798699697' }
+    ]
+  },
+  13: {
+    faculty: [
+      { name: 'Dr. M. S. Kumbhar', role: 'Head, First Year Engineering (AS&H)', email: 'ms.kumbhar@rit.edu', phone: '9421112233', room: 'Basic Science Block B-1' }
+    ],
+    students: [
+      { name: 'Atharva Mane', role: 'First Year Student Council Lead', year: 'B.Tech First Year', email: 'atharva.mane@rit.edu', phone: '9421112233' }
+    ]
+  }
+};
+
+const DEFAULT_NOTIFICATIONS = [
+  { id: 1, title: 'Welcome to RIT Event Portal', message: 'Centralized events management is active for all college departments.', time: 'Just now', unread: true },
+  { id: 2, title: 'Hack-O-Fiesta 2026 Approved', message: 'CSE event Hack-O-Fiesta 2026 approved by Director and published.', time: '10 mins ago', unread: true },
+  { id: 3, title: 'New Participant Registration', message: 'Sanjay Deshmukh registered for Hack-O-Fiesta 2026.', time: '1 hour ago', unread: false }
+];
+
+const DEFAULT_VISITOR_STATS = [
+  { date: '2026-08-07', daily_visitors: 420, campus_wifi: 230, social_media: 90, google_search: 60, direct_traffic: 30, qr_code_scans: 10 },
+  { date: '2026-08-08', daily_visitors: 510, campus_wifi: 280, social_media: 110, google_search: 70, direct_traffic: 35, qr_code_scans: 15 },
+  { date: '2026-08-09', daily_visitors: 380, campus_wifi: 190, social_media: 95, google_search: 55, direct_traffic: 25, qr_code_scans: 15 },
+  { date: '2026-08-10', daily_visitors: 620, campus_wifi: 340, social_media: 130, google_search: 85, direct_traffic: 45, qr_code_scans: 20 },
+  { date: '2026-08-11', daily_visitors: 750, campus_wifi: 410, social_media: 160, google_search: 105, direct_traffic: 50, qr_code_scans: 25 },
+  { date: '2026-08-12', daily_visitors: 820, campus_wifi: 450, social_media: 180, google_search: 110, direct_traffic: 55, qr_code_scans: 25 },
+  { date: '2026-08-13', daily_visitors: 690, campus_wifi: 380, social_media: 150, google_search: 95, direct_traffic: 45, qr_code_scans: 20 },
+  { date: '2026-08-14', daily_visitors: 890, campus_wifi: 490, social_media: 190, google_search: 120, direct_traffic: 60, qr_code_scans: 30 },
+  { date: '2026-08-15', daily_visitors: 980, campus_wifi: 520, social_media: 210, google_search: 140, direct_traffic: 70, qr_code_scans: 40 },
+  { date: '2026-08-16', daily_visitors: 540, campus_wifi: 270, social_media: 130, google_search: 80, direct_traffic: 40, qr_code_scans: 20 },
+  { date: '2026-08-17', daily_visitors: 780, campus_wifi: 430, social_media: 170, google_search: 110, direct_traffic: 50, qr_code_scans: 20 },
+  { date: '2026-08-18', daily_visitors: 860, campus_wifi: 470, social_media: 190, google_search: 120, direct_traffic: 55, qr_code_scans: 25 },
+  { date: '2026-08-19', daily_visitors: 920, campus_wifi: 500, social_media: 200, google_search: 130, direct_traffic: 60, qr_code_scans: 30 },
+  { date: '2026-08-20', daily_visitors: 1040, campus_wifi: 580, social_media: 230, google_search: 140, direct_traffic: 65, qr_code_scans: 25 }
+];
+
 // Database state lists
 let departments = [];
 let users = [];
 let events = [];
 let registrations = [];
 let auditLogs = [];
+let achievements = [];
+let notifications = [];
+let visitorStats = [];
 
 // App runtime states
 const appState = {
@@ -304,7 +464,12 @@ const appState = {
   heroIndex: 0,
   heroInterval: null,
   currentCalendarDate: new Date(2026, 7, 20), // August 2026 (matching system date context)
-  activeGalleryEventId: null
+  activeGalleryEventId: null,
+  isApiConnected: false,
+  apiUrl: 'http://localhost:5000/api',
+  authToken: sessionStorage.getItem('rit_token') || null,
+  rejectEventId: null,
+  currentYearFilter: 'All'
 };
 
 // Global chart references to allow clean destruction and avoid canvas conflicts
@@ -312,10 +477,84 @@ let deptChartInstance = null;
 let yearChartInstance = null;
 let monthChartInstance = null;
 let popularChartInstance = null;
+let visitorChartInstance = null;
+let trafficChartInstance = null;
+
+function updateBackendStatus(isOnline) {
+  appState.isApiConnected = isOnline;
+  const pill = document.getElementById('backend-status-pill');
+  const text = document.getElementById('backend-status-text');
+  if (pill && text) {
+    if (isOnline) {
+      pill.classList.remove('offline');
+      text.innerText = 'Live REST API';
+      pill.title = 'Connected to Node.js / Express Backend (http://localhost:5000)';
+    } else {
+      pill.classList.add('offline');
+      text.innerText = 'Standalone Mode';
+      pill.title = 'Offline / LocalStorage Mode (Node backend not detected)';
+    }
+  }
+}
+
+const apiService = {
+  baseUrl: 'http://localhost:5000/api',
+
+  async checkHealth() {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1200);
+      const res = await fetch(`${this.baseUrl}/health`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        updateBackendStatus(true);
+        await this.syncAllFromBackend();
+        return true;
+      }
+    } catch (e) {
+      // offline
+    }
+    updateBackendStatus(false);
+    return false;
+  },
+
+  async syncAllFromBackend() {
+    if (!appState.isApiConnected) return;
+    try {
+      const [deptsRes, eventsRes, statsRes] = await Promise.all([
+        fetch(`${this.baseUrl}/departments`),
+        fetch(`${this.baseUrl}/events`),
+        fetch(`${this.baseUrl}/analytics/visitors`)
+      ]);
+      if (deptsRes && deptsRes.ok) {
+        const d = await deptsRes.json();
+        if (d && d.length) {
+          departments = d;
+          syncLocalStorage('departments');
+        }
+      }
+      if (eventsRes && eventsRes.ok) {
+        const ev = await eventsRes.json();
+        if (ev && ev.length) {
+          events = ev;
+          syncLocalStorage('events');
+        }
+      }
+      if (statsRes && statsRes.ok) {
+        const vs = await statsRes.json();
+        if (vs && vs.daily) {
+          visitorStats = vs.daily;
+        }
+      }
+    } catch (e) {
+      console.warn('Backend sync failed, using local cache:', e);
+    }
+  }
+};
 
 // Initialize and persistence hooks
 function initDatabase() {
-  // Clear stale local storage format to force migration (BBA addition and year formats update)
+  // Clear stale local storage format to force migration (FE department, BBA addition and rich event updates)
   const storedDepts = localStorage.getItem('rit_departments');
   const storedEvents = localStorage.getItem('rit_events');
 
@@ -323,7 +562,7 @@ function initDatabase() {
   if (storedDepts) {
     try {
       const parsed = JSON.parse(storedDepts);
-      if (parsed.length > 0 && parsed[0].code !== 'CSIT') {
+      if (parsed.length !== DEFAULT_DEPARTMENTS.length || !storedDepts.includes('B.Des') || !storedDepts.includes('AUTO') || !storedDepts.includes('DIPLOMA')) {
         needsReset = true;
       }
     } catch (e) {
@@ -331,12 +570,14 @@ function initDatabase() {
     }
   }
 
-  if (storedDepts && (!storedDepts.includes('CSIT') || !storedDepts.includes('Robotics') || needsReset || !storedEvents || !storedEvents.includes('CodeDash') || !storedEvents.includes('2025-02-25') || !storedEvents.includes('ORION') || (storedEvents && (storedEvents.includes('contact_info') || storedEvents.includes('RIT-AIML-NEURAL-PAY'))))) {
+  if (storedDepts && (needsReset || !storedDepts.includes('B.Des') || !storedDepts.includes('AUTO') || !storedDepts.includes('DIPLOMA') || !storedEvents || !storedEvents.includes('CodeDash'))) {
     localStorage.removeItem('rit_departments');
     localStorage.removeItem('rit_users');
     localStorage.removeItem('rit_events');
     localStorage.removeItem('rit_registrations');
     localStorage.removeItem('rit_audit_logs');
+    localStorage.removeItem('rit_achievements');
+    localStorage.removeItem('rit_notifications');
   }
 
   if (!localStorage.getItem('rit_departments')) {
@@ -354,6 +595,12 @@ function initDatabase() {
   if (!localStorage.getItem('rit_audit_logs')) {
     localStorage.setItem('rit_audit_logs', JSON.stringify(DEFAULT_LOGS));
   }
+  if (!localStorage.getItem('rit_achievements')) {
+    localStorage.setItem('rit_achievements', JSON.stringify(DEFAULT_ACHIEVEMENTS));
+  }
+  if (!localStorage.getItem('rit_notifications')) {
+    localStorage.setItem('rit_notifications', JSON.stringify(DEFAULT_NOTIFICATIONS));
+  }
 
   // Load from local storage into application memory
   departments = JSON.parse(localStorage.getItem('rit_departments'));
@@ -361,6 +608,9 @@ function initDatabase() {
   events = JSON.parse(localStorage.getItem('rit_events'));
   registrations = JSON.parse(localStorage.getItem('rit_registrations'));
   auditLogs = JSON.parse(localStorage.getItem('rit_audit_logs'));
+  achievements = JSON.parse(localStorage.getItem('rit_achievements'));
+  notifications = JSON.parse(localStorage.getItem('rit_notifications'));
+  visitorStats = DEFAULT_VISITOR_STATS;
 }
 
 function syncLocalStorage(key) {
@@ -369,6 +619,8 @@ function syncLocalStorage(key) {
   if (key === 'events' || !key) localStorage.setItem('rit_events', JSON.stringify(events));
   if (key === 'registrations' || !key) localStorage.setItem('rit_registrations', JSON.stringify(registrations));
   if (key === 'audit_logs' || !key) localStorage.setItem('rit_audit_logs', JSON.stringify(auditLogs));
+  if (key === 'achievements' || !key) localStorage.setItem('rit_achievements', JSON.stringify(achievements));
+  if (key === 'notifications' || !key) localStorage.setItem('rit_notifications', JSON.stringify(notifications));
 }
 
 // --- 2. AUDIT LOG GENERATOR & DEVICE ANALYSIS ---
@@ -566,6 +818,7 @@ function loadHomeView() {
   renderStatsSection();
   renderDeptFilterDropdown();
   renderUpcomingEventsGrid();
+  renderLatestEventsGrid();
   renderDepartmentsGrid();
   renderHeroSlider();
   renderGlobalCalendar();
@@ -575,7 +828,10 @@ function loadHomeView() {
   document.getElementById('filter-category').onchange = filterEvents;
   document.getElementById('filter-status').onchange = filterEvents;
   document.getElementById('filter-month').onchange = filterEvents;
-  document.getElementById('filter-date').oninput = filterEvents;
+  const dateEl = document.getElementById('filter-date');
+  if (dateEl) {
+    dateEl.oninput = filterEvents;
+  }
   document.getElementById('search-input').oninput = filterEvents;
 }
 
@@ -589,6 +845,10 @@ function renderStatsSection() {
   document.getElementById('stat-events').innerText = total;
   document.getElementById('stat-upcoming').innerText = upcoming;
   document.getElementById('stat-completed').innerText = completed;
+  const participantEl = document.getElementById('stat-participants');
+  if (participantEl) {
+    participantEl.innerText = registrations.length || 0;
+  }
 }
 
 function renderDeptFilterDropdown() {
@@ -602,28 +862,52 @@ function renderDeptFilterDropdown() {
   });
 }
 
-function renderUpcomingEventsGrid(filteredList = null) {
+function renderUpcomingEventsGrid(filteredList = null, isFiltered = false) {
   const grid = document.getElementById('upcoming-events-grid');
+  if (!grid) return;
+  
   // If not filtering, only show public "Published" events
   const baseList = filteredList || events.filter(e => e.status === 'Published');
   const currentDate = '2026-08-20';
 
-  // Sort upcoming events by date ascending
-  const upcomingList = baseList
-    .filter(e => e.event_date >= currentDate)
-    .sort((a, b) => a.event_date.localeCompare(b.event_date));
+  let listToRender;
+  if (isFiltered) {
+    listToRender = baseList;
+  } else {
+    listToRender = baseList.filter(e => e.event_date >= currentDate);
+  }
 
-  if (upcomingList.length === 0) {
+  // Sort events by date ascending
+  listToRender.sort((a, b) => a.event_date.localeCompare(b.event_date));
+
+  // Dynamically update section header text based on search/filter status
+  const sectionHeader = grid.previousElementSibling?.querySelector('h2');
+  if (sectionHeader) {
+    if (isFiltered) {
+      const statusVal = document.getElementById('filter-status')?.value || '';
+      if (statusVal === 'Upcoming') {
+        sectionHeader.innerText = 'Filtered Upcoming Events';
+      } else if (statusVal === 'Completed') {
+        sectionHeader.innerText = 'Filtered Completed Events';
+      } else {
+        sectionHeader.innerText = 'Search & Filter Results';
+      }
+    } else {
+      sectionHeader.innerText = 'Upcoming College Events';
+    }
+  }
+
+  if (listToRender.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1/-1; padding: 3rem; text-align: center; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
-        <p style="color: var(--text-secondary)">No upcoming events scheduled at this moment.</p>
+        <p style="color: var(--text-secondary)">${isFiltered ? 'No events match the selected criteria.' : 'No upcoming events scheduled at this moment.'}</p>
       </div>
     `;
     return;
   }
 
   grid.innerHTML = '';
-  upcomingList.forEach(event => {
+  listToRender.forEach(event => {
     const dept = departments.find(d => d.id === event.department_id);
     const card = document.createElement('div');
     card.className = 'event-card';
@@ -649,6 +933,57 @@ function renderUpcomingEventsGrid(filteredList = null) {
           </span>
           <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem;">
             View Details
+          </button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderLatestEventsGrid() {
+  const grid = document.getElementById('latest-events-grid');
+  if (!grid) return;
+
+  const published = events.filter(e => e.status === 'Published');
+  const latestList = [...published].sort((a, b) => b.id - a.id).slice(0, 6);
+
+  if (latestList.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1/-1; padding: 2rem; text-align: center; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
+        <p style="color: var(--text-secondary)">No events recently published.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = '';
+  latestList.forEach(event => {
+    const dept = departments.find(d => d.id === event.department_id);
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    card.style.cursor = 'pointer';
+    card.onclick = () => navigateTo('event-details', { id: event.id });
+    card.innerHTML = `
+      <div class="card-img-wrapper">
+        <img src="${event.poster_image}" alt="${event.title}" class="card-img" loading="lazy">
+        <span class="card-badge" style="background: var(--accent-gold); color: white;">New</span>
+        <span class="card-dept">${dept ? dept.code : 'RIT'}</span>
+      </div>
+      <div class="card-body">
+        <span class="card-date">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          ${new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </span>
+        <h3 class="card-title">${event.title}</h3>
+        <p class="card-desc">${event.description}</p>
+        <div class="card-meta">
+          <span class="card-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${event.venue}
+          </span>
+          <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem;">
+            Explore
           </button>
         </div>
       </div>
@@ -740,7 +1075,9 @@ function filterEvents() {
   const catVal = document.getElementById('filter-category').value;
   const statusVal = document.getElementById('filter-status').value;
   const monthVal = document.getElementById('filter-month').value;
-  const dateVal = document.getElementById('filter-date').value;
+  
+  const dateEl = document.getElementById('filter-date');
+  const dateVal = dateEl ? dateEl.value : '';
 
   const currentDate = '2026-08-20';
 
@@ -775,7 +1112,8 @@ function filterEvents() {
     return matchesSearch && matchesDept && matchesYear && matchesCategory && matchesStatus && matchesMonth && matchesDate;
   });
 
-  renderUpcomingEventsGrid(filtered);
+  const hasActiveFilters = searchVal !== '' || deptVal !== '' || yearVal !== '' || catVal !== '' || statusVal !== '' || monthVal !== '' || dateVal !== '';
+  renderUpcomingEventsGrid(filtered, hasActiveFilters);
 }
 
 function loadDepartmentView(deptId) {
@@ -801,80 +1139,135 @@ function loadDepartmentView(deptId) {
     </div>
   `;
 
-  // Bind Tabs
-  const tabs = ['upcoming', 'archives', 'coordinators', 'gallery'];
+  // Bind All 7 Tabs
+  const tabs = ['upcoming', 'current', 'archives', 'achievements', 'gallery', 'faculty', 'students'];
   tabs.forEach(tab => {
     const btn = document.getElementById(`tab-dept-${tab}`);
-    btn.onclick = () => {
-      tabs.forEach(t => {
-        document.getElementById(`tab-dept-${t}`).classList.remove('active');
-        document.getElementById(`dept-${t}-pane`).classList.add('hidden');
-      });
-      btn.classList.add('active');
-      document.getElementById(`dept-${tab}-pane`).classList.remove('hidden');
-    };
+    if (btn) {
+      btn.onclick = () => {
+        tabs.forEach(t => {
+          const tabBtn = document.getElementById(`tab-dept-${t}`);
+          const tabPane = document.getElementById(`dept-${t}-pane`);
+          if (tabBtn) tabBtn.classList.remove('active');
+          if (tabPane) tabPane.classList.add('hidden');
+        });
+        btn.classList.add('active');
+        const targetPane = document.getElementById(`dept-${tab}-pane`);
+        if (targetPane) targetPane.classList.remove('hidden');
+      };
+    }
   });
 
   document.getElementById('tab-dept-upcoming').click();
 
-  // 1. Upcoming Panel
-  const paneGrid = document.getElementById('dept-upcoming-events-grid');
   const currentDate = '2026-08-20';
+
+  // Helper to render event card
+  const createEventCard = (event) => {
+    const card = document.createElement('div');
+    card.className = 'event-card';
+    card.onclick = () => navigateTo('event-details', { id: event.id });
+    card.innerHTML = `
+      <div class="card-img-wrapper">
+        <img src="${event.poster_image}" alt="${event.title}" class="card-img" loading="lazy">
+        <span class="card-badge">${event.category}</span>
+      </div>
+      <div class="card-body">
+        <span class="card-date">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          ${new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </span>
+        <h3 class="card-title">${event.title}</h3>
+        <p class="card-desc">${event.description}</p>
+        <div class="card-meta">
+          <span class="card-meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${event.venue}
+          </span>
+          <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem;">
+            View Details
+          </button>
+        </div>
+      </div>
+    `;
+    return card;
+  };
+
+  // 1. Upcoming Panel
+  const upcomingGrid = document.getElementById('dept-upcoming-events-grid');
   const upcoming = deptEvents.filter(e => e.event_date >= currentDate);
 
   if (upcoming.length === 0) {
-    paneGrid.innerHTML = `
+    upcomingGrid.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
-        <p style="color: var(--text-secondary)">No upcoming events scheduled currently.</p>
+        <p style="color: var(--text-secondary)">No upcoming events scheduled currently for ${dept.code}.</p>
       </div>
     `;
   } else {
-    paneGrid.innerHTML = '';
-    upcoming.forEach(event => {
-      const card = document.createElement('div');
-      card.className = 'event-card';
-      card.onclick = () => navigateTo('event-details', { id: event.id });
-      card.innerHTML = `
-        <div class="card-img-wrapper">
-          <img src="${event.poster_image}" alt="${event.title}" class="card-img" loading="lazy">
-          <span class="card-badge">${event.category}</span>
-        </div>
-        <div class="card-body">
-          <span class="card-date">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            ${new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-          </span>
-          <h3 class="card-title">${event.title}</h3>
-          <p class="card-desc">${event.description}</p>
-          <div class="card-meta">
-            <span class="card-meta-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              ${event.venue}
-            </span>
-            <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem;">
-              View Details
-            </button>
-          </div>
-        </div>
-      `;
-      paneGrid.appendChild(card);
-    });
+    upcomingGrid.innerHTML = '';
+    upcoming.forEach(e => upcomingGrid.appendChild(createEventCard(e)));
   }
 
-  // 2. Archives Panel
-  const archivesWrapper = document.getElementById('dept-archives-wrapper');
-  const completed = deptEvents.filter(e => e.event_date < currentDate);
+  // 2. Current Year Panel (2025-26) with Technical / Non-Technical Filters
+  const currentGrid = document.getElementById('dept-current-events-grid');
+  const currentYearEvents = deptEvents.filter(e => e.academic_year === '2025-2026');
 
-  if (completed.length === 0) {
+  const renderCurrentYearGrid = (catFilter = 'All') => {
+    let filtered = currentYearEvents;
+    if (catFilter !== 'All') {
+      filtered = currentYearEvents.filter(e => e.category === catFilter);
+    }
+    if (filtered.length === 0) {
+      currentGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 2.5rem; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
+          <p style="color: var(--text-secondary)">No ${catFilter !== 'All' ? catFilter : ''} events found for Academic Year 2025-26.</p>
+        </div>
+      `;
+      return;
+    }
+    currentGrid.innerHTML = '';
+    filtered.forEach(e => currentGrid.appendChild(createEventCard(e)));
+  };
+
+  const btnCurrentAll = document.getElementById('btn-current-all');
+  const btnCurrentTech = document.getElementById('btn-current-tech');
+  const btnCurrentNontech = document.getElementById('btn-current-nontech');
+
+  if (btnCurrentAll && btnCurrentTech && btnCurrentNontech) {
+    btnCurrentAll.onclick = () => {
+      btnCurrentAll.className = 'btn btn-primary';
+      btnCurrentTech.className = 'btn btn-outline';
+      btnCurrentNontech.className = 'btn btn-outline';
+      renderCurrentYearGrid('All');
+    };
+    btnCurrentTech.onclick = () => {
+      btnCurrentAll.className = 'btn btn-outline';
+      btnCurrentTech.className = 'btn btn-primary';
+      btnCurrentNontech.className = 'btn btn-outline';
+      renderCurrentYearGrid('Technical');
+    };
+    btnCurrentNontech.onclick = () => {
+      btnCurrentAll.className = 'btn btn-outline';
+      btnCurrentTech.className = 'btn btn-outline';
+      btnCurrentNontech.className = 'btn btn-primary';
+      renderCurrentYearGrid('Non Technical');
+    };
+  }
+  renderCurrentYearGrid('All');
+
+  // 3. Previous Years Archives Panel
+  const archivesWrapper = document.getElementById('dept-archives-wrapper');
+  const archived = deptEvents.filter(e => e.academic_year !== '2025-2026' || e.event_date < currentDate);
+
+  if (archived.length === 0) {
     archivesWrapper.innerHTML = `
       <div style="text-align: center; padding: 3rem; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
-        <p style="color: var(--text-secondary)">No previous events archived.</p>
+        <p style="color: var(--text-secondary)">No previous academic year events archived for ${dept.code}.</p>
       </div>
     `;
   } else {
-    // Group completed events by Academic Year
     const grouped = {};
-    completed.forEach(e => {
+    archived.forEach(e => {
       const year = e.academic_year;
       if (!grouped[year]) grouped[year] = [];
       grouped[year].push(e);
@@ -897,81 +1290,98 @@ function loadDepartmentView(deptId) {
       archivesWrapper.appendChild(section);
 
       const subgrid = document.getElementById(`dept-grid-${cleanYearId}`);
-      grouped[year].forEach(event => {
-        const card = document.createElement('div');
-        card.className = 'event-card';
-        card.onclick = () => navigateTo('event-details', { id: event.id });
-        card.style.opacity = '0.9';
-        card.innerHTML = `
-          <div class="card-img-wrapper">
-            <img src="${event.poster_image}" alt="${event.title}" class="card-img" style="filter: grayscale(20%)" loading="lazy">
-            <span class="card-badge" style="background-color: var(--text-muted)">Archived</span>
-          </div>
-          <div class="card-body">
-            <span class="card-date" style="color: var(--text-muted)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              ${new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-            </span>
-            <h3 class="card-title">${event.title}</h3>
-            <p class="card-desc">${event.description}</p>
-            <div class="card-meta">
-              <span class="card-meta-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                ${event.venue}
-              </span>
-              <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem;">
-                View Details
-              </button>
-            </div>
-          </div>
-        `;
-        subgrid.appendChild(card);
-      });
+      grouped[year].forEach(event => subgrid.appendChild(createEventCard(event)));
     });
   }
 
-  // 3. Coordinators Panel
-  const coGrid = document.getElementById('dept-coordinators-grid');
-  const facultySet = new Set();
-  const studentSet = new Set();
-  const coList = [];
+  // 4. Achievements Panel
+  const achieveGrid = document.getElementById('dept-achievements-grid');
+  const deptAchievements = achievements.filter(a => a.dept_id === dept.id);
 
-  deptEvents.forEach(e => {
-    if (e.faculty_coordinator && !facultySet.has(e.faculty_coordinator)) {
-      facultySet.add(e.faculty_coordinator);
-      coList.push({ name: e.faculty_coordinator, role: 'Faculty Coordinator', contact: e.contact_1 });
-    }
-    if (e.student_coordinator && !studentSet.has(e.student_coordinator)) {
-      studentSet.add(e.student_coordinator);
-      coList.push({ name: e.student_coordinator, role: 'Student Coordinator', contact: e.contact_1 });
-    }
-  });
-
-  if (coList.length === 0) {
-    coGrid.innerHTML = `
+  if (deptAchievements.length === 0) {
+    achieveGrid.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background-color: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color)">
-        <p style="color: var(--text-secondary)">No coordinator profiles found.</p>
+        <p style="color: var(--text-secondary)">Official achievement milestones will be announced soon.</p>
       </div>
     `;
   } else {
-    coGrid.innerHTML = '';
-    coList.forEach(person => {
+    achieveGrid.innerHTML = '';
+    deptAchievements.forEach(item => {
       const card = document.createElement('div');
-      card.className = 'coordinator-card';
+      card.className = 'achievement-card';
       card.innerHTML = `
-        <div class="co-avatar">${person.name.charAt(0)}</div>
-        <div class="co-info">
-          <h4>${person.name}</h4>
-          <p>${person.role}</p>
-          ${person.contact ? `<p style="font-size: 0.8rem; color: var(--text-secondary)">Contact: ${person.contact}</p>` : ''}
+        <span class="achievement-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          ${item.badge}
+        </span>
+        <h3 class="achievement-title">${item.title}</h3>
+        <p class="achievement-desc">${item.desc}</p>
+        <div class="achievement-meta">
+          <span>Year: ${item.year}</span>
+          <span>${item.date}</span>
         </div>
       `;
-      coGrid.appendChild(card);
+      achieveGrid.appendChild(card);
     });
   }
 
-  // 4. Gallery Panel (Grid and Lightbox preview support)
+  // 5. Gallery Panel
   renderDepartmentGallery(deptEvents);
+
+  // 6. Faculty Coordinators Panel
+  const facultyGrid = document.getElementById('dept-faculty-grid');
+  const deptCoordinatorsData = DEFAULT_COORDINATORS[dept.id] || {
+    faculty: [
+      { name: 'Dr. Head of Department', role: `${dept.code} Department Head`, email: `hod.${dept.code.toLowerCase()}@rit.edu`, phone: '02342-220329', room: `${dept.code} Faculty Wing` }
+    ],
+    students: [
+      { name: 'Lead Student Coordinator', role: 'Student Association Head', email: `student.${dept.code.toLowerCase()}@rit.edu`, phone: '9876543210', year: 'Final Year B.Tech' }
+    ]
+  };
+
+  facultyGrid.innerHTML = '';
+  deptCoordinatorsData.faculty.forEach(person => {
+    const card = document.createElement('div');
+    card.className = 'coordinator-card';
+    card.innerHTML = `
+      <div class="coordinator-avatar">${person.name.charAt(0)}</div>
+      <h4 class="coordinator-name">${person.name}</h4>
+      <div class="coordinator-role">${person.role}</div>
+      <div class="coordinator-contact">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:${person.email}" style="color: var(--accent-color);">${person.email}</a>
+      </div>
+      <div class="coordinator-contact">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        ${person.phone}
+      </div>
+      ${person.room ? `<p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Office: ${person.room}</p>` : ''}
+    `;
+    facultyGrid.appendChild(card);
+  });
+
+  // 7. Student Coordinators Panel
+  const studentsGrid = document.getElementById('dept-students-grid');
+  studentsGrid.innerHTML = '';
+  deptCoordinatorsData.students.forEach(student => {
+    const card = document.createElement('div');
+    card.className = 'coordinator-card';
+    card.innerHTML = `
+      <div class="coordinator-avatar" style="background: linear-gradient(135deg, var(--accent-gold), #fb923c);">${student.name.charAt(0)}</div>
+      <h4 class="coordinator-name">${student.name}</h4>
+      <div class="coordinator-role" style="color: var(--accent-color);">${student.role}</div>
+      ${student.year ? `<p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">${student.year}</p>` : ''}
+      <div class="coordinator-contact">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:${student.email}" style="color: var(--accent-color);">${student.email}</a>
+      </div>
+      <div class="coordinator-contact">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        ${student.phone}
+      </div>
+    `;
+    studentsGrid.appendChild(card);
+  });
 }
 
 function renderDepartmentGallery(deptEvents) {
@@ -1148,6 +1558,39 @@ function launchLightbox(imgSrc, title) {
   document.body.appendChild(overlay);
 }
 
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item ? item.querySelector('.faq-answer') : null;
+  const icon = btn.querySelector('.faq-icon');
+  if (!answer) return;
+  
+  const isHidden = answer.style.display === 'none' || !answer.style.display;
+  if (isHidden) {
+    answer.style.display = 'block';
+    if (icon) icon.style.transform = 'rotate(180deg)';
+  } else {
+    answer.style.display = 'none';
+    if (icon) icon.style.transform = 'rotate(0deg)';
+  }
+}
+
+function renderVideoEmbed(url) {
+  if (!url || typeof url !== 'string' || url.trim() === '') return '';
+  const cleanUrl = url.trim();
+  if (cleanUrl.includes('youtube.com') || cleanUrl.includes('youtu.be')) {
+    let videoId = '';
+    if (cleanUrl.includes('youtu.be/')) {
+      videoId = cleanUrl.split('youtu.be/')[1].split('?')[0];
+    } else if (cleanUrl.includes('v=')) {
+      videoId = cleanUrl.split('v=')[1].split('&')[0];
+    }
+    if (videoId) {
+      return `<iframe src="https://www.youtube.com/embed/${videoId}" title="Event Video Showcase" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
+  }
+  return `<video src="${cleanUrl}" controls preload="metadata" style="width: 100%; height: 100%; object-fit: cover;"></video>`;
+}
+
 function loadEventDetailsView(eventId) {
   const event = events.find(e => e.id === parseInt(eventId));
   if (!event) {
@@ -1168,30 +1611,229 @@ function loadEventDetailsView(eventId) {
     navigateTo('department', { id: event.department_id });
   };
 
+  // 1. Parse Schedule Timeline
+  let scheduleItems = [];
+  if (Array.isArray(event.schedule) && event.schedule.length > 0) {
+    scheduleItems = event.schedule;
+  } else if (typeof event.schedule === 'string' && event.schedule.trim() !== '') {
+    scheduleItems = event.schedule.split('|').map(s => {
+      const parts = s.split(':');
+      const time = parts.length > 1 ? parts.slice(0, 2).join(':').trim() : 'Scheduled';
+      const title = parts.length > 2 ? parts.slice(2).join(':').trim() : (parts[1] ? parts[1].trim() : s.trim());
+      return { time, title, desc: '' };
+    });
+  } else {
+    scheduleItems = [
+      { time: '09:30 AM', title: 'Reporting & Verification Desk', desc: 'Check-in with physical college ID cards and collect event registration kit.' },
+      { time: '10:30 AM', title: 'Inauguration & Keynote Address', desc: 'Opening speech by Head of Department and Industry Chief Guest.' },
+      { time: '11:30 AM', title: 'Round 1 / Hackathon Commencement', desc: 'Evaluation parameters explained; initial prototyping and live coding begins.' },
+      { time: '01:30 PM', title: 'Networking Lunch & Industry Interaction', desc: 'Complimentary lunch for registered teams and interaction with judges.' },
+      { time: '02:30 PM', title: 'Round 2 / Final Jury Presentation', desc: 'Teams demonstrate prototypes, code solutions, and mechanical models.' },
+      { time: '04:30 PM', title: 'Valedictory & Prize Distribution', desc: 'Trophy, certificate distribution, and announcement of podium winners.' }
+    ];
+  }
+
+  // 2. Parse Sponsors
+  let sponsorsList = [];
+  if (Array.isArray(event.sponsors) && event.sponsors.length > 0) {
+    sponsorsList = event.sponsors;
+  } else if (typeof event.sponsors === 'string' && event.sponsors.trim() !== '') {
+    sponsorsList = event.sponsors.split('|').map(item => {
+      const parts = item.split('-');
+      return {
+        name: parts[0] ? parts[0].trim() : item.trim(),
+        tier: parts[1] ? parts[1].trim() : 'Event Partner'
+      };
+    });
+  } else {
+    sponsorsList = [
+      { name: 'Tata Consultancy Services', tier: 'Title Sponsor' },
+      { name: 'Persistent Systems', tier: 'Technology Partner' },
+      { name: 'RIT Alumni Association', tier: 'Community Partner' }
+    ];
+  }
+
+  // 3. Parse FAQs
+  let faqsList = [];
+  if (Array.isArray(event.faqs) && event.faqs.length > 0) {
+    faqsList = event.faqs;
+  } else if (typeof event.faqs === 'string' && event.faqs.trim() !== '') {
+    const rawFaqs = event.faqs.split('|');
+    faqsList = rawFaqs.map(f => {
+      const parts = f.split('A:');
+      const q = parts[0] ? parts[0].replace(/Q:\s*/i, '').trim() : f.trim();
+      const a = parts[1] ? parts[1].trim() : 'Please contact the student coordinators for clarification.';
+      return { q, a };
+    });
+  } else {
+    faqsList = [
+      { q: 'Who is eligible to participate in this event?', a: 'Any student currently enrolled in an AICTE/DTE recognized undergraduate, diploma, or postgraduate program is welcome to register. Valid college ID card is required.' },
+      { q: 'Is on-spot registration accepted on the event morning?', a: 'Pre-registration via this portal is strongly recommended due to slot limits. On-spot registrations depend on desk availability.' },
+      { q: 'Will every participant receive a verified certificate?', a: 'Yes! All verified participants receive an official verifiable digital certificate issued by RIT, accessible on this portal.' },
+      { q: 'Can inter-college teams participate together?', a: 'Yes, team members can be from different departments or institutes, provided each member has their college ID.' }
+    ];
+  }
+
+  // 4. Parse Winners (for completed events or if present)
+  let winnersList = [];
+  if (Array.isArray(event.winners) && event.winners.length > 0) {
+    winnersList = event.winners;
+  } else if (typeof event.winners === 'string' && event.winners.trim() !== '') {
+    winnersList = event.winners.split('|').map((w, idx) => {
+      const parts = w.split(':');
+      const rank = parts.length > 1 ? parts[0].trim() : `${idx + 1}st Place`;
+      const details = parts.length > 1 ? parts[1].trim() : w.trim();
+      const collegeMatch = details.match(/\((.*?)\)/);
+      const team = collegeMatch ? details.replace(collegeMatch[0], '').trim() : details;
+      const college = collegeMatch ? collegeMatch[1] : 'Participating College';
+      return { rank, team, college };
+    });
+  } else if (!isUpcoming) {
+    winnersList = [
+      { rank: '1st Place (Winner)', team: 'Team ByteCraft (RIT)', college: "K. E. Society's Rajarambapu Institute of Technology" },
+      { rank: '2nd Place (Runner Up)', team: 'Team Nexus', college: 'Walchand College of Engineering, Sangli' },
+      { rank: '3rd Place (2nd Runner Up)', team: 'Team Innovators', college: 'Government College of Engineering, Karad' }
+    ];
+  }
+
+  // 5. Rules text
+  const rulesList = event.rules && event.rules.trim() !== ''
+    ? event.rules.split('\n').filter(r => r.trim().length > 0)
+    : [
+        'All participants must represent their institute with an official physical student identity card.',
+        'Teams must present project codes or designs strictly within their designated timeline windows.',
+        'Decision criteria are evaluated independently by external industry experts; decisions are final.',
+        'Participation fee payments (if applicable) must be settled prior to registration desk closing.'
+      ];
+
   const detailsBox = document.getElementById('event-details-content');
   detailsBox.innerHTML = `
     <div class="details-main-card">
-      <img src="${event.poster_image}" alt="${event.title}" class="details-banner">
+      <img src="${event.poster_image}" alt="${event.title}" class="details-banner" onerror="this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=60'">
       <div class="details-body">
         <div class="details-meta-top">
           <span class="badge-tag badge-tag-gold">${event.academic_year}</span>
           <span class="badge-tag badge-tag-blue">${event.category}</span>
           <span class="badge-tag">${dept ? dept.name : 'Unknown Department'}</span>
+          <span class="status-badge ${isUpcoming ? 'published' : 'draft'}">${isUpcoming ? 'Registrations Open' : 'Completed'}</span>
         </div>
         <h2 class="details-title">${event.title}</h2>
+        
+        <!-- Description -->
         <div class="details-section">
           <h3>Description</h3>
-          <p style="white-space: pre-wrap; color: var(--text-secondary)">${event.description}</p>
+          <p style="white-space: pre-wrap; color: var(--text-secondary); line-height: 1.7;">${event.description}</p>
         </div>
+
+        <!-- Eligibility -->
         <div class="details-section">
-          <h3>Rules & Guidelines</h3>
-          <p style="color: var(--text-secondary); line-height: 1.8;">
-            1. All participants must represent their institute with a valid physical identity card.<br>
-            2. Teams must present project codes or designs strictly within their designated timeline windows.<br>
-            3. Decision criteria are managed by external evaluator panels; HOD decision is final.<br>
-            4. Participation fee payments must be settled online prior to the event registration deadline.
+          <h3>Eligibility & Entry Requirements</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6; background: var(--bg-tertiary); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-color);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 0.4rem; color: var(--accent-color);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            ${event.eligibility || 'Open to all undergraduate and diploma engineering, technology, science, and polytechnic students across Maharashtra & India with a valid college ID card.'}
           </p>
         </div>
+
+        <!-- Rules & Guidelines -->
+        <div class="details-section">
+          <h3>Rules & Guidelines</h3>
+          <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.25rem; margin: 0;">
+            ${rulesList.map(r => `<li>${r.replace(/^\d+\.\s*/, '')}</li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Timeline Schedule -->
+        <div class="details-section">
+          <h3>Event Schedule & Timeline</h3>
+          <div class="timeline-list">
+            ${scheduleItems.map((item, idx) => `
+              <div class="timeline-step">
+                <div class="timeline-badge">${idx + 1}</div>
+                <div class="timeline-content">
+                  <div class="timeline-time">${item.time}</div>
+                  <div class="timeline-title">${item.title}</div>
+                  ${item.desc ? `<p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0.25rem 0 0;">${item.desc}</p>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Video Player Highlights -->
+        ${event.video_url ? `
+          <div class="details-section">
+            <h3>Event Highlights & Video Showcase</h3>
+            <div class="video-wrapper">
+              ${renderVideoEmbed(event.video_url)}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Downloads Center -->
+        <div class="details-section">
+          <h3>Official Downloads Center</h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem;">
+            <button class="btn btn-outline" id="btn-details-brochure-doc" style="display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Brochure (PDF)
+            </button>
+            <button class="btn btn-outline" id="btn-details-rulebook-doc" style="display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; border-color: var(--accent-gold); color: var(--accent-gold);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Download Rulebook (PDF)
+            </button>
+          </div>
+        </div>
+
+        <!-- Winners Podium -->
+        ${winnersList.length > 0 ? `
+          <div class="details-section">
+            <h3>Winners & Hall of Fame</h3>
+            <div class="winners-podium">
+              ${winnersList.map((w, i) => {
+                const tierClass = i === 0 ? 'first' : (i === 1 ? 'second' : 'third');
+                return `
+                  <div class="winner-card ${tierClass}">
+                    <div class="winner-rank">${w.rank}</div>
+                    <div class="winner-team">${w.team}</div>
+                    <div class="winner-college">${w.college}</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Sponsors Showcase -->
+        <div class="details-section">
+          <h3>Event Partners & Sponsors</h3>
+          <div class="sponsors-grid">
+            ${sponsorsList.map(s => `
+              <div class="sponsor-card">
+                <span class="sponsor-tier-badge">${s.tier}</span>
+                <div class="sponsor-name">${s.name}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- FAQs Accordion -->
+        <div class="details-section">
+          <h3>Frequently Asked Questions</h3>
+          <div class="faq-accordion" id="event-faq-accordion">
+            ${faqsList.map((faq, idx) => `
+              <div class="faq-item">
+                <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                  <span>${faq.q}</span>
+                  <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                  ${faq.a}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1269,7 +1911,7 @@ function loadEventDetailsView(eventId) {
           <div class="widget-item">
             <div class="widget-item-value">
               <h5>Primary Helpdesk</h5>
-              <p>${event.contact_1}</p>
+              <p><a href="tel:${event.contact_1}" style="color: var(--accent-color); font-weight: 600;">${event.contact_1}</a></p>
             </div>
           </div>
         ` : ''}
@@ -1277,7 +1919,7 @@ function loadEventDetailsView(eventId) {
           <div class="widget-item">
             <div class="widget-item-value">
               <h5>Secondary Helpdesk</h5>
-              <p>${event.contact_2}</p>
+              <p><a href="tel:${event.contact_2}" style="color: var(--accent-color);">${event.contact_2}</a></p>
             </div>
           </div>
         ` : ''}
@@ -1285,7 +1927,7 @@ function loadEventDetailsView(eventId) {
           <div class="widget-item">
             <div class="widget-item-value">
               <h5>Alternative Helpdesk</h5>
-              <p>${event.contact_3}</p>
+              <p><a href="tel:${event.contact_3}" style="color: var(--accent-color);">${event.contact_3}</a></p>
             </div>
           </div>
         ` : ''}
@@ -1299,6 +1941,16 @@ function loadEventDetailsView(eventId) {
       </div>
     </div>
   `;
+
+  // Bind Downloads Center buttons
+  const docBrochureBtn = document.getElementById('btn-details-brochure-doc');
+  if (docBrochureBtn) {
+    docBrochureBtn.onclick = () => downloadBrochurePDF(event);
+  }
+  const docRulebookBtn = document.getElementById('btn-details-rulebook-doc');
+  if (docRulebookBtn) {
+    docRulebookBtn.onclick = () => downloadRulebookPDF(event);
+  }
 
   // Bind Actions if upcoming
   if (isUpcoming) {
@@ -1321,16 +1973,15 @@ function loadEventDetailsView(eventId) {
 
   // Bind Navbar Social Sharing
   document.getElementById('details-share-btn').onclick = () => {
-    // Web Share API support or fallback clipboard
     if (navigator.share) {
       navigator.share({
         title: event.title,
-        text: `Check out ${event.title} at RIT!`,
+        text: `Check out ${event.title} at K. E. Society's Rajarambapu Institute of Technology!`,
         url: window.location.href
       }).catch(err => console.log(err));
     } else {
       navigator.clipboard.writeText(window.location.href)
-        .then(() => showToast("Simulated event page URL copied! Share it with your peers."))
+        .then(() => showToast("Event page URL copied! Share it with your peers."))
         .catch(() => showToast("Copy failed."));
     }
   };
@@ -1338,6 +1989,109 @@ function loadEventDetailsView(eventId) {
   document.getElementById('details-print-btn').onclick = () => {
     window.print();
   };
+}
+
+function downloadRulebookPDF(event) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'in',
+    format: 'letter'
+  });
+
+  // Border designs
+  doc.setLineWidth(0.02);
+  doc.rect(0.5, 0.5, 7.5, 10.0);
+  doc.setDrawColor(30, 58, 138); // Navy blue
+  doc.rect(0.55, 0.55, 7.4, 9.9);
+
+  // Title
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(16);
+  doc.setTextColor(30, 58, 138);
+  doc.text("K. E. Society's Rajarambapu Institute of Technology (RIT)", 4.0, 1.2, { align: "center" });
+
+  doc.setFontSize(10);
+  doc.setFont("Helvetica", "normal");
+  doc.setTextColor(100, 116, 139);
+  doc.text("Official Event Rulebook & Evaluation Guidelines", 4.0, 1.5, { align: "center" });
+
+  doc.setLineWidth(0.01);
+  doc.setDrawColor(226, 232, 240);
+  doc.line(0.8, 1.8, 7.2, 1.8);
+
+  // Event title & Academic Year
+  doc.setFontSize(16);
+  doc.setFont("Helvetica", "bold");
+  doc.setTextColor(15, 23, 42);
+  doc.text(event.title, 4.0, 2.3, { align: "center" });
+
+  doc.setFontSize(10);
+  doc.setFont("Helvetica", "bold");
+  doc.setTextColor(180, 83, 9);
+  doc.text(`${event.category} Competition | Academic Year ${event.academic_year}`, 4.0, 2.6, { align: "center" });
+
+  // Eligibility
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(11);
+  doc.setTextColor(15, 23, 42);
+  doc.text("1. Eligibility & Verification", 0.9, 3.2);
+
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(9.5);
+  doc.setTextColor(71, 85, 105);
+  const eligText = event.eligibility || 'Open to all undergraduate and diploma engineering students with valid institute ID cards.';
+  const splitElig = doc.splitTextToSize(eligText, 6.2);
+  doc.text(splitElig, 0.9, 3.5);
+
+  // Rules
+  const rulesY = 3.5 + (splitElig.length * 0.2) + 0.3;
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(11);
+  doc.setTextColor(15, 23, 42);
+  doc.text("2. Official Competition Rules", 0.9, rulesY);
+
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(9.5);
+  doc.setTextColor(71, 85, 105);
+  const defaultRules = [
+    "1. Teams must check in at the registration desk 30 minutes before the inauguration ceremony.",
+    "2. All hardware, software, or design submissions must be original work created within designated timelines.",
+    "3. Evaluation rubrics will assess Innovation (30%), Technical Execution (40%), and Presentation (30%).",
+    "4. The decisions of the External Industry Evaluation Panel and the Head of Department are final.",
+    "5. Misbehavior or breach of the college code of conduct results in immediate disqualification without fee refunds."
+  ];
+  doc.text(defaultRules, 0.9, rulesY + 0.3);
+
+  // Coordination Box
+  const startY = rulesY + 1.8;
+  doc.setFillColor(248, 250, 252);
+  doc.rect(0.9, startY, 6.2, 1.4, "F");
+  doc.rect(0.9, startY, 6.2, 1.4);
+
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(30, 58, 138);
+  doc.text("Contact & Helpdesk Coordination", 1.1, startY + 0.3);
+
+  doc.setFontSize(9);
+  doc.setFont("Helvetica", "normal");
+  doc.setTextColor(15, 23, 42);
+  doc.text(`Faculty Lead: ${event.faculty_coordinator || 'N/A'}`, 1.1, startY + 0.6);
+  doc.text(`Student Lead: ${event.student_coordinator || 'N/A'}`, 1.1, startY + 0.9);
+  doc.text(`Primary Inquiries: ${event.contact_1 || 'RIT Event Cell'} | Venue: ${event.venue}`, 1.1, startY + 1.2);
+
+  // Footer note
+  doc.setFontSize(8.5);
+  doc.setTextColor(148, 163, 184);
+  doc.text("RIT Central Event Portal - Official Document Record", 4.0, 10.0, { align: "center" });
+
+  doc.save(`${event.title.replace(/\s+/g, '_')}_Rulebook.pdf`);
+  
+  // Track downloads
+  event.downloads = (event.downloads || 0) + 1;
+  syncLocalStorage('events');
+  showToast("Official Rulebook PDF compiled and downloaded!");
 }
 
 // Download event calendar invite (.ics)
@@ -1388,14 +2142,14 @@ function downloadBrochurePDF(event) {
 
   // Title
   doc.setFont("Helvetica", "bold");
-  doc.setFontSize(22);
+  doc.setFontSize(18);
   doc.setTextColor(30, 58, 138); // Navy blue
-  doc.text("Rajarambapu Institute of Technology (RIT)", 4.0, 1.2, { align: "center" });
+  doc.text("K. E. Society's Rajarambapu Institute of Technology", 4.0, 1.1, { align: "center" });
 
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setFont("Helvetica", "normal");
   doc.setTextColor(100, 116, 139);
-  doc.text("Rajaramnagar, Islampur, Maharashtra, India", 4.0, 1.5, { align: "center" });
+  doc.text("Rajaramnagar - 415414, Tal. Walwa Dist. Sangli, Maharashtra, India", 4.0, 1.4, { align: "center" });
 
   doc.setLineWidth(0.01);
   doc.setDrawColor(226, 232, 240);
@@ -1728,7 +2482,7 @@ document.getElementById('certificate-form').onsubmit = (e) => {
     previewWrapper.innerHTML = `
       <div style="border: 4px double #b45309; padding: 2rem; text-align:center; background-color:#fffdfa;">
         <h2 style="font-family:serif; color:#1e3a8a; font-size:1.75rem; margin:0 0 0.5rem;">CERTIFICATE OF PARTICIPATION</h2>
-        <p style="font-size:0.85rem; color:#64748b; margin-bottom:1.5rem;">RAJARAMBAPU INSTITUTE OF TECHNOLOGY, ISLAMPUR</p>
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:1.5rem;">K. E. SOCIETY'S RAJARAMBAPU INSTITUTE OF TECHNOLOGY, RAJARAMNAGAR</p>
         <span style="font-size:0.9rem; font-style:italic;">This is proudly presented to</span>
         <h3 style="font-size:1.5rem; color:#b45309; margin:0.75rem 0; font-family:serif;">${foundReg.name}</h3>
         <p style="font-size:0.9rem; line-height:1.6; max-width:400px; margin:0 auto;">
@@ -1781,10 +2535,10 @@ document.getElementById('btn-cert-download').onclick = () => {
   doc.text("CERTIFICATE OF PARTICIPATION", 5.5, 1.8, { align: "center" });
 
   doc.setFont("Helvetica", "normal");
-  doc.setFontSize(11);
+  doc.setFontSize(10);
   doc.setTextColor(100, 116, 139);
-  doc.text("RAJARAMBAPU INSTITUTE OF TECHNOLOGY", 5.5, 2.2, { align: "center" });
-  doc.text("Islampur, Maharashtra, India | Autonomous Institute", 5.5, 2.4, { align: "center" });
+  doc.text("K. E. SOCIETY'S RAJARAMBAPU INSTITUTE OF TECHNOLOGY", 5.5, 2.2, { align: "center" });
+  doc.text("Rajaramnagar - 415414, Tal. Walwa Dist. Sangli, Maharashtra | Autonomous Institute", 5.5, 2.4, { align: "center" });
 
   doc.setFont("serif", "italic");
   doc.setFontSize(14);
@@ -1970,6 +2724,9 @@ function loadDashboardTable() {
             <button class="icon-btn btn-row-approve" title="Approve & Publish Event" style="color: var(--success-color);">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
+            <button class="icon-btn btn-row-reject" title="Reject Submission with Feedback" style="color: var(--error-color);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
           ` : ''}
           <button class="icon-btn icon-btn-edit btn-row-edit" title="Edit Event">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
@@ -1988,6 +2745,9 @@ function loadDashboardTable() {
     if (tr.querySelector('.btn-row-approve')) {
       tr.querySelector('.btn-row-approve').onclick = () => approveEvent(e.id);
     }
+    if (tr.querySelector('.btn-row-reject')) {
+      tr.querySelector('.btn-row-reject').onclick = () => openRejectModal(e.id);
+    }
     tr.querySelector('.btn-row-edit').onclick = () => openEventModal('edit', e);
     tr.querySelector('.btn-row-delete').onclick = () => deleteEvent(e.id);
   });
@@ -2000,7 +2760,60 @@ function approveEvent(id) {
     events[idx].status = 'Published';
     syncLocalStorage('events');
     addAuditLog(`Approved Pending Event`, `Status: ${beforeStatus}`, `Status: Published (${events[idx].title})`);
+    
+    // Add success notification
+    const newNotif = {
+      id: Date.now(),
+      title: `Event Approved: ${events[idx].title}`,
+      message: `Director & Super Admin approved submission for publication.`,
+      time: 'Just now',
+      unread: true
+    };
+    notifications.unshift(newNotif);
+    syncLocalStorage('notifications');
+    renderNotifications();
+
     showDashboardAlert('success', `Event '${events[idx].title}' has been successfully approved and is now public!`);
+    loadDashboardTable();
+  }
+}
+
+function openRejectModal(id) {
+  appState.rejectEventId = id;
+  const evt = events.find(item => item.id === id);
+  const title = evt ? evt.title : 'Event';
+  const heading = document.querySelector('#reject-modal h3');
+  if (heading) heading.innerText = `Reject Submission: ${title}`;
+  document.getElementById('reject-reason').value = '';
+  document.getElementById('reject-modal').classList.remove('hidden');
+}
+
+function handleRejectFormSubmit(e) {
+  e.preventDefault();
+  const eventId = appState.rejectEventId;
+  const reason = document.getElementById('reject-reason').value.trim();
+  const idx = events.findIndex(item => item.id === eventId);
+  if (idx !== -1) {
+    const beforeStatus = events[idx].status;
+    events[idx].status = 'Rejected';
+    events[idx].rejection_reason = reason;
+    syncLocalStorage('events');
+    addAuditLog('Rejected Pending Event', `Status: ${beforeStatus}`, `Status: Rejected - Reason: ${reason} (${events[idx].title})`);
+    
+    // Add warning notification
+    const newNotif = {
+      id: Date.now(),
+      title: `Event Submission Rejected: ${events[idx].title}`,
+      message: `Rejection Feedback: "${reason}"`,
+      time: 'Just now',
+      unread: true
+    };
+    notifications.unshift(newNotif);
+    syncLocalStorage('notifications');
+    renderNotifications();
+
+    showDashboardAlert('warning', `Event '${events[idx].title}' has been marked as Rejected. Feedback recorded and notification dispatched.`);
+    document.getElementById('reject-modal').classList.add('hidden');
     loadDashboardTable();
   }
 }
@@ -2491,7 +3304,7 @@ function exportRegistrationsToPDF(list, event) {
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(16);
   doc.setTextColor(30, 58, 138);
-  doc.text("Rajarambapu Institute of Technology", 14, 20);
+  doc.text("K. E. Society's Rajarambapu Institute of Technology", 14, 20);
   
   doc.setFontSize(10);
   doc.setFont("Helvetica", "normal");
@@ -2618,6 +3431,8 @@ function loadAnalyticsPane() {
   if (yearChartInstance) yearChartInstance.destroy();
   if (monthChartInstance) monthChartInstance.destroy();
   if (popularChartInstance) popularChartInstance.destroy();
+  if (visitorChartInstance) visitorChartInstance.destroy();
+  if (trafficChartInstance) trafficChartInstance.destroy();
 
   // 1. Chart 1: Department distribution (Super admin only)
   const deptWrapper = document.getElementById('chart-dept-wrapper');
@@ -2742,12 +3557,216 @@ function loadAnalyticsPane() {
       }
     }
   });
+
+  // 5. Chart 5: 14-Day Visitor Velocity & Sources Distribution
+  const stats = (typeof visitorStats !== 'undefined' && visitorStats.length > 0) ? visitorStats : DEFAULT_VISITOR_STATS;
+  const totalVisitors = stats.reduce((sum, s) => sum + (s.daily_visitors || 0), 0);
+  const totalWifi = stats.reduce((sum, s) => sum + (s.campus_wifi || 0), 0);
+  const totalSocial = stats.reduce((sum, s) => sum + (s.social_media || 0), 0);
+  const totalGoogle = stats.reduce((sum, s) => sum + (s.google_search || 0), 0);
+  const totalDirect = stats.reduce((sum, s) => sum + (s.direct_traffic || 0), 0);
+  const totalQr = stats.reduce((sum, s) => sum + (s.qr_code_scans || 0), 0);
+  const allSourcesTotal = totalWifi + totalSocial + totalGoogle + totalDirect + totalQr;
+  const wifiPercent = allSourcesTotal > 0 ? Math.round((totalWifi / allSourcesTotal) * 100) : 54;
+
+  const statVisitorsEl = document.getElementById('dash-stat-visitors');
+  if (statVisitorsEl) statVisitorsEl.innerText = `${(totalVisitors / 1000).toFixed(1)}K`;
+  const statTrafficEl = document.getElementById('dash-stat-traffic');
+  if (statTrafficEl) statTrafficEl.innerText = `Campus Wi-Fi (${wifiPercent}%)`;
+
+  const canvasVisitor = document.getElementById('canvas-visitor-chart');
+  if (canvasVisitor) {
+    const ctxVisitor = canvasVisitor.getContext('2d');
+    visitorChartInstance = new Chart(ctxVisitor, {
+      type: 'line',
+      data: {
+        labels: stats.map(s => {
+          const parts = s.date.split('-');
+          return parts.length >= 3 ? `${parts[1]}/${parts[2]}` : s.date;
+        }),
+        datasets: [{
+          label: 'Daily Portal Visitors',
+          data: stats.map(s => s.daily_visitors || 0),
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.12)',
+          fill: true,
+          tension: 0.35,
+          pointRadius: 4,
+          pointBackgroundColor: '#10b981'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: false, ticks: { precision: 0 } }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  }
+
+  const canvasTraffic = document.getElementById('canvas-traffic-chart');
+  if (canvasTraffic) {
+    const ctxTraffic = canvasTraffic.getContext('2d');
+    trafficChartInstance = new Chart(ctxTraffic, {
+      type: 'doughnut',
+      data: {
+        labels: ['Campus Wi-Fi', 'Social Media', 'Google Search', 'Direct Traffic', 'QR Poster Scans'],
+        datasets: [{
+          data: [totalWifi, totalSocial, totalGoogle, totalDirect, totalQr],
+          backgroundColor: ['#4f46e5', '#ec4899', '#3b82f6', '#10b981', '#f59e0b'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'Outfit' } } }
+        }
+      }
+    });
+  }
 }
 
 // --- 8. EVENTS CREATION & EDIT MODALS SYSTEM ---
 
 let activeModalMode = 'add';
 let activeModalEventId = null;
+
+function setupFileUploadHandlers() {
+  const posterFileInput = document.getElementById('form-poster-file');
+  const posterUrlInput = document.getElementById('form-poster');
+  if (posterFileInput) {
+    posterFileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        posterUrlInput.value = evt.target.result;
+        showToast("Poster image loaded locally!");
+      };
+      reader.readAsDataURL(file);
+
+      if (appState.isApiConnected) {
+        const formData = new FormData();
+        formData.append('file', file);
+        fetch('http://localhost:5000/api/upload', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.fileUrl) {
+            posterUrlInput.value = data.fileUrl;
+            showToast("Poster uploaded to server!");
+          }
+        })
+        .catch(err => console.log('Poster upload failed:', err));
+      }
+    };
+  }
+
+  const qrFileInput = document.getElementById('form-qr-file');
+  const qrUrlInput = document.getElementById('form-qr');
+  if (qrFileInput) {
+    qrFileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        qrUrlInput.value = evt.target.result;
+        showToast("Payment QR loaded locally!");
+      };
+      reader.readAsDataURL(file);
+
+      if (appState.isApiConnected) {
+        const formData = new FormData();
+        formData.append('file', file);
+        fetch('http://localhost:5000/api/upload', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.fileUrl) {
+            qrUrlInput.value = data.fileUrl;
+            showToast("QR uploaded to server!");
+          }
+        })
+        .catch(err => console.log('QR upload failed:', err));
+      }
+    };
+  }
+}
+
+function renderNotifications() {
+  const badge = document.getElementById('notif-badge');
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+
+  const notifs = (typeof notifications !== 'undefined') ? notifications : [];
+  const unreadCount = notifs.filter(n => n.unread).length;
+
+  if (badge) {
+    if (unreadCount > 0) {
+      badge.innerText = unreadCount;
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  if (notifs.length === 0) {
+    list.innerHTML = `
+      <div style="padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+        No notifications right now
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = notifs.map(n => `
+    <div class="notif-item ${n.unread ? 'unread' : ''}" onclick="markNotificationRead(${n.id})">
+      <div class="notif-item-title">${n.title}</div>
+      <div class="notif-item-msg">${n.message}</div>
+      <div class="notif-item-time">${n.time || 'Recent'}</div>
+    </div>
+  `).join('');
+}
+
+window.markNotificationRead = function(id) {
+  const notif = notifications.find(n => n.id === id);
+  if (notif) {
+    notif.unread = false;
+    syncLocalStorage('notifications');
+    renderNotifications();
+  }
+};
+
+function clearAllNotifications() {
+  notifications.forEach(n => n.unread = false);
+  syncLocalStorage('notifications');
+  renderNotifications();
+  showToast("All notifications marked as read.");
+}
+
+function toggleNotifDropdown() {
+  const dropdown = document.getElementById('notif-dropdown');
+  if (dropdown) {
+    dropdown.classList.toggle('hidden');
+  }
+}
+
+function closeNotifDropdown() {
+  const dropdown = document.getElementById('notif-dropdown');
+  if (dropdown && !dropdown.classList.contains('hidden')) {
+    dropdown.classList.add('hidden');
+  }
+}
 
 function openEventModal(mode, event = null) {
   activeModalMode = mode;
@@ -2776,8 +3795,18 @@ function openEventModal(mode, event = null) {
     document.getElementById('form-contact-1').value = '';
     document.getElementById('form-contact-2').value = '';
     document.getElementById('form-contact-3').value = '';
+    document.getElementById('form-rules').value = '';
+    document.getElementById('form-eligibility').value = '';
+    document.getElementById('form-schedule').value = '';
+    document.getElementById('form-brochure').value = '';
+    document.getElementById('form-video').value = '';
+    document.getElementById('form-sponsors').value = '';
+    document.getElementById('form-faqs').value = '';
+    document.getElementById('form-winners').value = '';
     document.getElementById('form-status').value = 'Published';
+    document.getElementById('form-poster-file').value = '';
     document.getElementById('form-poster').value = '';
+    document.getElementById('form-qr-file').value = '';
     document.getElementById('form-qr').value = '';
 
     if (appState.user.role !== 'super_admin') {
@@ -2805,8 +3834,18 @@ function openEventModal(mode, event = null) {
     document.getElementById('form-contact-1').value = event.contact_1 || '';
     document.getElementById('form-contact-2').value = event.contact_2 || '';
     document.getElementById('form-contact-3').value = event.contact_3 || '';
+    document.getElementById('form-rules').value = event.rules || '';
+    document.getElementById('form-eligibility').value = event.eligibility || '';
+    document.getElementById('form-schedule').value = Array.isArray(event.schedule) ? event.schedule.map(s => `${s.time}: ${s.title}`).join(' | ') : (event.schedule || '');
+    document.getElementById('form-brochure').value = event.brochure_url || '';
+    document.getElementById('form-video').value = event.video_url || '';
+    document.getElementById('form-sponsors').value = Array.isArray(event.sponsors) ? event.sponsors.map(s => `${s.name} - ${s.tier}`).join(' | ') : (event.sponsors || '');
+    document.getElementById('form-faqs').value = Array.isArray(event.faqs) ? event.faqs.map(f => `Q: ${f.q} A: ${f.a}`).join(' | ') : (event.faqs || '');
+    document.getElementById('form-winners').value = Array.isArray(event.winners) ? event.winners.map(w => `${w.rank}: ${w.team} (${w.college})`).join(' | ') : (event.winners || '');
     document.getElementById('form-status').value = event.status || 'Published';
+    document.getElementById('form-poster-file').value = '';
     document.getElementById('form-poster').value = event.poster_image || '';
+    document.getElementById('form-qr-file').value = '';
     document.getElementById('form-qr').value = event.payment_qr || '';
   }
 
@@ -2842,13 +3881,20 @@ function handleEventFormSubmit(e) {
     contact_1: document.getElementById('form-contact-1').value.trim(),
     contact_2: document.getElementById('form-contact-2').value.trim(),
     contact_3: document.getElementById('form-contact-3').value.trim(),
+    rules: document.getElementById('form-rules').value.trim(),
+    eligibility: document.getElementById('form-eligibility').value.trim(),
+    schedule: document.getElementById('form-schedule').value.trim(),
+    brochure_url: document.getElementById('form-brochure').value.trim(),
+    video_url: document.getElementById('form-video').value.trim(),
+    sponsors: document.getElementById('form-sponsors').value.trim(),
+    faqs: document.getElementById('form-faqs').value.trim(),
+    winners: document.getElementById('form-winners').value.trim(),
     status: document.getElementById('form-status').value,
     poster_image: document.getElementById('form-poster').value.trim() || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=60',
     payment_qr: document.getElementById('form-qr').value.trim()
   };
 
   if (activeModalMode === 'add') {
-    // Generate new event id
     const newId = events.length > 0 ? Math.max(...events.map(item => item.id)) + 1 : 1;
     eventData.id = newId;
     eventData.views = 0;
@@ -2857,9 +3903,30 @@ function handleEventFormSubmit(e) {
     events.push(eventData);
     syncLocalStorage('events');
     addAuditLog('Created Event', 'N/A', `${eventData.title} (${eventData.status})`);
+    
+    // Add notification
+    const newNotif = {
+      id: Date.now(),
+      title: `New Event Added: ${eventData.title}`,
+      message: `Published for ${eventData.academic_year} (${eventData.category})`,
+      time: 'Just now',
+      unread: true
+    };
+    notifications.unshift(newNotif);
+    syncLocalStorage('notifications');
+    renderNotifications();
+
+    // Backend sync if active
+    if (appState.isApiConnected) {
+      fetch('http://localhost:5000/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventData)
+      }).catch(err => console.log('Backend create failed:', err));
+    }
+
     showDashboardAlert('success', `New event '${eventData.title}' submitted! status: ${eventData.status}`);
   } else {
-    // Update event record
     const idx = events.findIndex(item => item.id === activeModalEventId);
     if (idx !== -1) {
       const beforeStr = `${events[idx].title} (${events[idx].status})`;
@@ -2869,6 +3936,16 @@ function handleEventFormSubmit(e) {
       };
       syncLocalStorage('events');
       addAuditLog('Updated Event Details', beforeStr, `${eventData.title} (${eventData.status})`);
+
+      // Backend sync if active
+      if (appState.isApiConnected) {
+        fetch(`http://localhost:5000/api/events/${activeModalEventId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(eventData)
+        }).catch(err => console.log('Backend update failed:', err));
+      }
+
       showDashboardAlert('success', `Event '${eventData.title}' configurations saved.`);
     }
   }
@@ -3038,6 +4115,37 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('login-form').onsubmit = handleLoginSubmit;
   document.getElementById('dept-back-btn').onclick = () => navigateTo('home');
   document.getElementById('certificate-form').onsubmit = (e) => e.preventDefault(); // Controlled in trigger
+
+  // Super Admin Reject Form submission
+  const rejectForm = document.getElementById('reject-form');
+  if (rejectForm) {
+    rejectForm.onsubmit = handleRejectFormSubmit;
+  }
+
+  // Notification Bell toggling & clearing
+  renderNotifications();
+  const notifBtn = document.getElementById('notif-btn');
+  if (notifBtn) {
+    notifBtn.onclick = (e) => {
+      e.stopPropagation();
+      toggleNotifDropdown();
+    };
+  }
+  const notifClearBtn = document.getElementById('notif-clear-btn');
+  if (notifClearBtn) {
+    notifClearBtn.onclick = (e) => {
+      e.stopPropagation();
+      clearAllNotifications();
+    };
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-notif-container')) {
+      closeNotifDropdown();
+    }
+  });
+
+  // Setup Event Form File Upload Listeners
+  setupFileUploadHandlers();
   
   // Temporary title clear on print to hide browser page title header
   let originalTitle = document.title;
@@ -3064,6 +4172,9 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {
     console.warn("Could not replace initial history state:", e);
   }
+
+  // Check backend server availability
+  apiService.checkHealth();
 
   // Launch Home View
   navigateTo('home', {}, false);

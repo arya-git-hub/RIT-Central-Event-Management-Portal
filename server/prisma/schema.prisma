@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Change to "postgresql" or "mysql" for production deployment
+  url      = env("DATABASE_URL")
+}
+
+model Department {
+  id           Int      @id @default(autoincrement())
+  code         String   @unique
+  name         String
+  banner_image String
+  description  String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  users        User[]
+  events       Event[]
+}
+
+model User {
+  id            Int         @id @default(autoincrement())
+  username      String      @unique
+  password      String      // Hashed password
+  full_name     String
+  role          String      // "super_admin" or "dept_admin"
+  department_id Int?
+  department    Department? @relation(fields: [department_id], references: [id], onDelete: SetNull)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+}
+
+model Event {
+  id                    Int            @id @default(autoincrement())
+  title                 String
+  description           String
+  department_id         Int
+  department            Department     @relation(fields: [department_id], references: [id], onDelete: Cascade)
+  academic_year         String         // e.g. "2025-2026"
+  category              String         // "Technical" or "Non Technical"
+  event_date            String         // YYYY-MM-DD
+  event_time            String         // HH:mm
+  venue                 String
+  registration_deadline String         // YYYY-MM-DD
+  registration_link     String?
+  payment_qr            String?
+  fees                  String?        @default("Free")
+  faculty_coordinator   String?
+  student_coordinator   String?
+  contact_1             String?
+  contact_2             String?
+  contact_3             String?
+  poster_image          String?
+  brochure_url          String?
+  video_url             String?
+  rules                 String?        // JSON or multiline text
+  eligibility           String?        // Eligibility criteria
+  schedule              String?        // JSON string of schedule phases
+  sponsors              String?        // JSON string of sponsor logos & tiers
+  winners               String?        // JSON string of winner records
+  faqs                  String?        // JSON string of FAQ pairs
+  status                String         @default("Published") // "Draft", "Pending Approval", "Published", "Rejected"
+  views                 Int            @default(0)
+  downloads             Int            @default(0)
+  created_at            DateTime       @default(now())
+  updated_at            DateTime       @updatedAt
+  registrations         Registration[]
+}
+
+model Registration {
+  id            Int      @id @default(autoincrement())
+  event_id      Int
+  event         Event    @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  name          String
+  email         String
+  department_id Int
+  ticket_id     String   @unique
+  paid          Boolean  @default(false)
+  tx_id         String?
+  checked_in    Boolean  @default(false)
+  created_at    DateTime @default(now())
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  timestamp  DateTime @default(now())
+  user       String
+  department String
+  ip         String
+  env        String
+  action     String
+  details    String
+}
+
+model Notification {
+  id            Int      @id @default(autoincrement())
+  title         String
+  message       String
+  role_target   String?  // "all", "super_admin", "dept_admin", "public"
+  department_id Int?
+  is_read       Boolean  @default(false)
+  created_at    DateTime @default(now())
+}
+
+model VisitorStat {
+  id             Int      @id @default(autoincrement())
+  date           String   @unique // YYYY-MM-DD
+  daily_visitors Int      @default(0)
+  direct_traffic Int      @default(0)
+  campus_wifi    Int      @default(0)
+  social_media   Int      @default(0)
+  google_search  Int      @default(0)
+  qr_code_scans  Int      @default(0)
+}

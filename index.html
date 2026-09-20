@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIT Central Event Management Portal</title>
+    <title>K. E. Society's Rajarambapu Institute of Technology - Central Event Management Portal</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <!-- PWA Support Script -->
@@ -30,7 +30,7 @@
             <img src="logo.png" alt="RIT Logo" class="nav-logo-icon">
             <div class="nav-title">
                 <h1>RIT Event Portal</h1>
-                <span>Rajarambapu Institute of Technology</span>
+                <span>K. E. Society's Rajarambapu Institute of Technology</span>
             </div>
         </div>
         <nav>
@@ -89,6 +89,31 @@
                         <line x1="15" y1="12" x2="3" y2="12" />
                     </svg>
                     Coordinator Login
+                </li>
+                <li class="nav-backend-item">
+                    <div id="backend-status-pill" class="backend-status-pill" title="Backend Connection State">
+                        <span class="status-dot"></span>
+                        <span id="backend-status-text">Live REST API</span>
+                    </div>
+                </li>
+                <li class="nav-notif-container" style="position: relative;">
+                    <button class="theme-toggle-btn" id="notif-btn" title="System Notifications" style="position: relative;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                        </svg>
+                        <span id="notif-badge" class="notif-badge hidden">0</span>
+                    </button>
+                    <div id="notif-dropdown" class="notif-dropdown glass-panel hidden">
+                        <div class="notif-header">
+                            <h4>Notifications</h4>
+                            <button id="notif-clear-btn" class="notif-clear-link">Mark all read</button>
+                        </div>
+                        <div id="notif-list" class="notif-list">
+                            <p style="padding: 1.25rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;">No active notifications</p>
+                        </div>
+                    </div>
                 </li>
                 <li>
                     <button class="theme-toggle-btn" id="theme-toggle" title="Switch Theme Mode">
@@ -184,6 +209,21 @@
                         <p>Completed Events</p>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="color: var(--accent-color);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-participants">0</h3>
+                        <p>Total Participants</p>
+                    </div>
+                </div>
             </div>
 
             <div class="filters-panel glass-panel">
@@ -233,6 +273,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
+                    <input type="date" id="filter-date" class="filter-select" title="Filter by Event Date">
                 </div>
             </div>
 
@@ -240,6 +281,16 @@
                 <h2>Upcoming College Events</h2>
             </div>
             <div id="upcoming-events-grid" class="events-grid">
+
+            </div>
+
+            <div id="sec-latest" class="section-header" style="margin-top: 4rem;">
+                <div>
+                    <h2>Latest Uploaded Events</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">Newly announced technical symposiums, workshops, and student challenges</p>
+                </div>
+            </div>
+            <div id="latest-events-grid" class="events-grid">
 
             </div>
 
@@ -294,24 +345,40 @@
 
             <div class="tabs-container">
                 <button class="tab-btn active" id="tab-dept-upcoming">Upcoming Events</button>
-                <button class="tab-btn" id="tab-dept-archives">Previous Year Archives</button>
-                <button class="tab-btn" id="tab-dept-coordinators">Coordinators & Faculty</button>
-                <button class="tab-btn" id="tab-dept-gallery">Gallery</button>
+                <button class="tab-btn" id="tab-dept-current">Current Year (2025-26)</button>
+                <button class="tab-btn" id="tab-dept-archives">Previous Years Archives</button>
+                <button class="tab-btn" id="tab-dept-achievements">Achievements</button>
+                <button class="tab-btn" id="tab-dept-gallery">Gallery & Media</button>
+                <button class="tab-btn" id="tab-dept-faculty">Faculty Coordinators</button>
+                <button class="tab-btn" id="tab-dept-students">Student Coordinators</button>
             </div>
 
             <div class="tab-pane">
                 <div id="dept-upcoming-pane">
                     <div id="dept-upcoming-events-grid" class="events-grid"></div>
                 </div>
+                <div id="dept-current-pane" class="hidden">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;" class="no-print">
+                        <button class="btn btn-primary" id="btn-current-all" style="font-size: 0.8rem; padding: 0.4rem 1rem;">All Events (2025-26)</button>
+                        <button class="btn btn-outline" id="btn-current-tech" style="font-size: 0.8rem; padding: 0.4rem 1rem;">Technical Events</button>
+                        <button class="btn btn-outline" id="btn-current-nontech" style="font-size: 0.8rem; padding: 0.4rem 1rem;">Non-Technical Events</button>
+                    </div>
+                    <div id="dept-current-events-grid" class="events-grid"></div>
+                </div>
                 <div id="dept-archives-pane" class="hidden">
                     <div id="dept-archives-wrapper"></div>
                 </div>
-                <div id="dept-coordinators-pane" class="hidden">
-                    <div id="dept-coordinators-grid" class="coordinators-grid"></div>
+                <div id="dept-achievements-pane" class="hidden">
+                    <div id="dept-achievements-grid" class="achievements-grid"></div>
                 </div>
                 <div id="dept-gallery-pane" class="hidden">
-                    <div id="dept-gallery-grid">
-                    </div>
+                    <div id="dept-gallery-grid"></div>
+                </div>
+                <div id="dept-faculty-pane" class="hidden">
+                    <div id="dept-faculty-grid" class="coordinators-grid"></div>
+                </div>
+                <div id="dept-students-pane" class="hidden">
+                    <div id="dept-students-grid" class="coordinators-grid"></div>
                 </div>
             </div>
         </section>
@@ -841,6 +908,35 @@
                                     <p>Completed Archives</p>
                                 </div>
                             </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--accent-color);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="dash-stat-visitors">1,040</h3>
+                                    <p>Today's Portal Visitors</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="color: var(--accent-gold);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="dash-stat-traffic">10.4K</h3>
+                                    <p>Monthly Portal Impressions</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="charts-grid"
                             style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem;">
@@ -866,6 +962,18 @@
                                 <h4>Engagement Leaderboard (Most Popular Activities)</h4>
                                 <div style="position: relative; height: 260px; width: 100%;">
                                     <canvas id="canvas-popular-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>14-Day Daily Visitor Traffic Velocity</h4>
+                                <div style="position: relative; height: 260px; width: 100%;">
+                                    <canvas id="canvas-visitor-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <h4>Traffic Sources Distribution</h4>
+                                <div style="position: relative; height: 260px; width: 100%;">
+                                    <canvas id="canvas-traffic-chart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -966,29 +1074,92 @@
                         <label class="form-label">Contact Number 3</label>
                         <input type="tel" id="form-contact-3" class="form-control" placeholder="Alternative Contact">
                     </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Rules & Guidelines</label>
+                        <textarea id="form-rules" rows="2" class="form-control" placeholder="1. Teams of 2-4 students. 2. Bring college ID card."></textarea>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Eligibility Criteria</label>
+                        <input type="text" id="form-eligibility" placeholder="e.g. Open to all Engineering & Polytechnic students" class="form-control">
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Schedule Breakdown (e.g. 09:00 AM - Inauguration | 10:30 AM - Round 1)</label>
+                        <input type="text" id="form-schedule" placeholder="Phase 1: 09:00 AM | Phase 2: 01:00 PM | Valedictory: 04:30 PM" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Brochure Document Link / URL</label>
+                        <input type="url" id="form-brochure" placeholder="https://... or upload below" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Event Promo Video URL (YouTube / MP4)</label>
+                        <input type="url" id="form-video" placeholder="https://www.youtube.com/watch?v=..." class="form-control">
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Sponsors Details (e.g. Persistent Systems, GitHub Campus)</label>
+                        <input type="text" id="form-sponsors" placeholder="Company Name - Tier (e.g. Infosys - Tech Partner)" class="form-control">
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Event FAQs (Question & Answer)</label>
+                        <textarea id="form-faqs" rows="2" class="form-control" placeholder="Q: Is food provided? A: Yes. | Q: Can inter-college teams join? A: Yes."></textarea>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Winners Podium (For Completed Events)</label>
+                        <input type="text" id="form-winners" placeholder="1st Place: Team Alpha | 2nd Place: Team Beta" class="form-control">
+                    </div>
                     <div class="form-group">
                         <label class="form-label">Publish Status *</label>
                         <select id="form-status" class="form-control" required>
                             <option value="Draft">Draft (Private)</option>
-                            <option value="Pending Approval">Pending Approval (HOD Review)</option>
+                            <option value="Pending Approval">Pending Approval (HOD / Admin Review)</option>
                             <option value="Published">Published (Public)</option>
                             <option value="Rejected">Rejected</option>
                         </select>
                     </div>
-                    <div class="form-group span-2">
-                        <label class="form-label">Poster Image Link (URL)</label>
-                        <input type="url" id="form-poster" placeholder="https://images.unsplash.com/..."
-                            class="form-control">
+                    <div class="form-group">
+                        <label class="form-label">Upload Poster File (or enter URL below)</label>
+                        <input type="file" id="form-poster-file" class="form-control" accept="image/*">
                     </div>
                     <div class="form-group span-2">
-                        <label class="form-label">Payment QR Image Link (URL)</label>
-                        <input type="url" id="form-qr" placeholder="https://api.qrserver.com/..." class="form-control">
+                        <label class="form-label">Poster Image Link (URL or Uploaded)</label>
+                        <input type="url" id="form-poster" placeholder="https://images.unsplash.com/... or uploaded file"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Upload Payment QR File (optional)</label>
+                        <input type="file" id="form-qr-file" class="form-control" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment QR Image Link (URL or Uploaded)</label>
+                        <input type="url" id="form-qr" placeholder="https://api.qrserver.com/... or uploaded file" class="form-control">
                     </div>
                 </div>
                 <div
                     style="display: flex; gap: 1rem; justify-content: flex-end; marginTop: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
                     <button type="button" class="btn btn-outline" id="form-cancel-btn">Cancel</button>
                     <button type="submit" class="btn btn-primary" id="form-submit-btn">Publish Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- REJECT EVENT MODAL FOR SUPER ADMIN -->
+    <div id="reject-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3 style="color: var(--error-color);">Reject Event Submission</h3>
+                <button class="modal-close" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary);" onclick="document.getElementById('reject-modal').classList.add('hidden')">&times;</button>
+            </div>
+            <form id="reject-form">
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Please enter the specific feedback or corrections required before this event can be approved.
+                </p>
+                <div class="form-group">
+                    <label class="form-label">Rejection Reason / Required Actions *</label>
+                    <textarea id="reject-reason" rows="4" class="form-control" placeholder="e.g. Please update the entry fee details and upload official sponsorship letters." required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('reject-modal').classList.add('hidden')">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Confirm Rejection</button>
                 </div>
             </form>
         </div>
@@ -1175,12 +1346,12 @@
     </div>
 
     <footer class="footer no-print">
-        <div><strong>Rajarambapu Institute of Technology (RIT)</strong></div>
-        <div style="font-size: 0.85rem;">Rajaramnagar, Islampur, Maharashtra, India.</div>
+        <div><strong>K. E. Society's Rajarambapu Institute of Technology, Rajaramnagar - 415414</strong></div>
+        <div style="font-size: 0.85rem; margin-top: 0.25rem;">Tal. Walwa Dist. Sangli, Maharashtra, India.</div>
         <div class="footer-credits">
-            &copy; <span id="footer-year">2026</span> RIT Central Event Management Portal. All rights reserved.
+            &copy; <span id="footer-year">2026</span> K. E. Society's RIT Central Event Management Portal. All rights reserved.
             <br>
-            Built for Academic Demonstrations with HTML, CSS, JavaScript, Node & MySQL.
+            Autonomous Institute affiliated to Shivaji University, Kolhapur
         </div>
     </footer>
 

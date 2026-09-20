@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Environment variables
+.env
+.env.local
+server/.env
+
+# Databases
+*.db
+*.db-journal
+server/prisma/*.db
+server/prisma/*.db-journal
+
+# Uploads runtime files
+server/uploads/*
+!server/uploads/.gitkeep
+
+# System & Editor files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

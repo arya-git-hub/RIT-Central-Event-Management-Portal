@@ -1,0 +1,36 @@
+{
+  "name": "rit-event-portal-backend",
+  "version": "1.0.0",
+  "description": "Production REST API Backend for Rajarambapu Institute of Technology (RIT) Central Event Management Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node seed.js",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push"
+  },
+  "keywords": [
+    "rit",
+    "event-management",
+    "express",
+    "rest-api",
+    "prisma",
+    "jwt"
+  ],
+  "author": "RIT Central Portal Team",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.4.1"
+  }
+}
