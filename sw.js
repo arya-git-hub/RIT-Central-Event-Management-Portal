@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rit-event-portal-v8';
+const CACHE_NAME = 'rit-event-portal-v9';
 const ASSETS = [
   './',
   './index.html',

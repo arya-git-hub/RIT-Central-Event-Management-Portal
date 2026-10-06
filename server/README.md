@@ -1,12 +1,12 @@
 # RIT Central Event Management Portal - Backend API Server
 
-This directory contains the production-grade **Node.js & Express REST API** with **Prisma ORM**, **JWT Authentication**, and **Multer File Uploads** for Rajarambapu Institute of Technology (RIT), Islampur.
+This directory contains the **Node.js & Express REST API** with **Prisma ORM**, **MongoDB Atlas**, **JWT Authentication**, and **Multer File Uploads** for Rajarambapu Institute of Technology (RIT), Islampur.
 
 ---
 
-## 🚀 Quick Start (Zero-Configuration with SQLite)
+## 🚀 Quick Start (MongoDB Atlas)
 
-The backend is configured to run out-of-the-box using **SQLite** for instant local testing, or **PostgreSQL** for enterprise deployment.
+Create a MongoDB Atlas cluster and database user, and allow your development machine/server IP in Atlas **Network Access**.
 
 ### 1. Install Dependencies
 ```bash
@@ -14,18 +14,30 @@ cd server
 npm install
 ```
 
-### 2. Generate Prisma Client & Run Migrations
-```bash
-npx prisma db push
+### 2. Configure the MongoDB connection
+
+Open the already-created `server/.env` file and replace the `DATABASE_URL` placeholders with the connection string from Atlas:
+
+```env
+DATABASE_URL="mongodb+srv://<database-user>:<url-encoded-password>@<cluster-host>/rit_central_event_portal?retryWrites=true&w=majority"
 ```
 
-### 3. Seed Initial College Data
+URL-encode special characters in the database user's password. Keep `.env` private and never commit Atlas credentials. Use a separate strong `JWT_SECRET` for deployments.
+
+### 3. Generate Prisma Client & Sync the MongoDB schema
+```bash
+npm run prisma:generate
+npm run prisma:push
+```
+
+### 4. Seed Initial College Data
 Pre-populates all RIT departments (including First Year Engineering), Super Admin, CSE HOD, sample events (Hack-O-Fiesta, CodeDash, ORION 2026), registrations, and audit logs:
 ```bash
-node seed.js
+npm run seed
 ```
+**Warning:** seeding deletes the existing portal collections before inserting demo data. Skip this step if you already have records you need to keep.
 
-### 4. Start the Server
+### 5. Start the Server
 ```bash
 # In development mode (auto-reload on code change)
 npm run dev
@@ -54,26 +66,12 @@ The frontend portal (`index.html`) is equipped with an **Adaptive API Service La
 
 ---
 
-## 🗄️ Switching to PostgreSQL or MySQL (Production)
+## 🗄️ MongoDB notes
 
-To connect to a real PostgreSQL database:
-
-1. Open `server/.env` and update `DATABASE_URL`:
-   ```env
-   DATABASE_URL="postgresql://postgres:your_password@localhost:5432/rit_events_db?schema=public"
-   ```
-2. In `server/prisma/schema.prisma`, update the datasource provider:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-3. Push database schema and seed:
-   ```bash
-   npx prisma db push
-   node seed.js
-   ```
+- MongoDB ObjectIds are used as internal document keys. Existing numeric `id` fields remain in API responses and continue to be used by the frontend and routes.
+- The API connects to MongoDB before listening, so an invalid URI or Atlas network-access rule is reported at startup.
+- MongoDB transactions (used by the backup restore endpoint) require a replica set. MongoDB Atlas clusters provide this support.
+- Changing the database connection does not import records from an old SQLite database; export/import data separately if you need to retain them.
 
 ---
 
@@ -138,6 +136,20 @@ To connect to a real PostgreSQL database:
 ---
 
 ## 🐳 Deployment (Docker, PM2 & Nginx)
+
+### Deploying the portal and API to Vercel
+
+The repository root contains the static portal and a Vercel serverless adapter for the Express API. Set these environment variables in the Vercel project's **Settings → Environment Variables** before deploying:
+
+- `DATABASE_URL`: the MongoDB Atlas connection string for the portal database.
+- `JWT_SECRET`: a long, unique random secret (do not reuse the example or commit it).
+- `NODE_ENV`: `production`.
+
+In MongoDB Atlas, allow network access from the Vercel deployment. Vercel serverless egress addresses may vary; use a supported static-egress/private-network option where available, or make an informed network-access change for a demo deployment. Use a dedicated database user with the minimum required privileges.
+
+After deployment, check `https://<your-domain>/api/health`. A healthy response reports `"status":"ok"` and `"database":"MongoDB"`. Open the portal on the same domain and confirm its status reads **MongoDB Connected**. Do not run the seed script against a database containing records you need to keep.
+
+Uploaded files use local disk storage in `server/uploads` when self-hosted. On Vercel, uploads are held in memory and returned as data URLs so the portal can store them with the event document in MongoDB; keep demo uploads small because MongoDB documents have a 16 MB limit. For production-scale media, configure durable object storage.
 
 ### Running with PM2 (Production Daemon)
 ```bash
