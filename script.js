@@ -498,7 +498,13 @@ function updateBackendStatus(isOnline) {
 }
 
 const apiService = {
-  baseUrl: window.RIT_API_BASE_URL || (window.location.protocol === 'file:' ? 'http://localhost:5000/api' : '/api'),
+  baseUrl: window.RIT_API_BASE_URL || (
+    window.location.protocol === 'file:'
+      ? 'http://localhost:5000/api'
+      : window.location.hostname.endsWith('github.io')
+        ? 'https://rit-central-event-management-portal.vercel.app/api'
+        : '/api'
+  ),
 
   async request(path, options = {}) {
     const headers = new Headers(options.headers || {});

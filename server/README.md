@@ -139,15 +139,17 @@ The frontend portal (`index.html`) is equipped with an **Adaptive API Service La
 
 ### Deploying the portal and API to Vercel
 
-The repository root contains the static portal and a Vercel serverless adapter for the Express API. Set these environment variables in the Vercel project's **Settings → Environment Variables** before deploying:
+The repository root contains the static portal and a `server.js` Express entry point that routes nested API paths through the Vercel deployment. The build copies the portal assets into `public/` for Vercel's static hosting. Set these environment variables in the Vercel project's **Settings → Environment Variables** before deploying:
 
-- `DATABASE_URL`: the MongoDB Atlas connection string for the portal database.
-- `JWT_SECRET`: a long, unique random secret (do not reuse the example or commit it).
+- `MONGODB_URI` or `DATABASE_URL`: the MongoDB Atlas connection string for the portal database. If both are set, `DATABASE_URL` takes precedence; if the URI omits its database path, the API uses `rit_central_event_portal`.
+- `JWT_SECRET`: a long, unique random secret. Generate it in your password manager; never paste it into source control or chat.
 - `NODE_ENV`: `production`.
 
 In MongoDB Atlas, allow network access from the Vercel deployment. Vercel serverless egress addresses may vary; use a supported static-egress/private-network option where available, or make an informed network-access change for a demo deployment. Use a dedicated database user with the minimum required privileges.
 
 After deployment, check `https://<your-domain>/api/health`. A healthy response reports `"status":"ok"` and `"database":"MongoDB"`. Open the portal on the same domain and confirm its status reads **MongoDB Connected**. Do not run the seed script against a database containing records you need to keep.
+
+GitHub Pages can host the static frontend, but it cannot run the API or safely connect directly to MongoDB. The frontend defaults to the Vercel API at `https://rit-central-event-management-portal.vercel.app/api` when served from `github.io`; both hosting URLs therefore use the same MongoDB data. Keep the API enabled only on the Vercel deployment and confirm its health check before testing admin changes.
 
 Uploaded files use local disk storage in `server/uploads` when self-hosted. On Vercel, uploads are held in memory and returned as data URLs so the portal can store them with the event document in MongoDB; keep demo uploads small because MongoDB documents have a 16 MB limit. For production-scale media, configure durable object storage.
 
