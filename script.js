@@ -4083,24 +4083,24 @@ async function handleEventFormSubmit(e) {
     payment_qr: document.getElementById('form-qr').value.trim()
   };
 
+  if (!appState.isApiConnected) {
+    showDashboardAlert('danger', 'Event was not saved: the database API is unavailable. Wait for the backend status to show MongoDB Connected, then try again.');
+    return;
+  }
+
   if (activeModalMode === 'add') {
     eventData.views = 0;
     eventData.downloads = 0;
 
-    if (appState.isApiConnected) {
-      try {
-        const created = await apiService.request('/events', {
-          method: 'POST',
-          body: JSON.stringify(eventData)
-        });
-        events.push(created);
-      } catch (error) {
-        showDashboardAlert('danger', `Event was not saved: ${error.message}`);
-        return;
-      }
-    } else {
-      eventData.id = events.length > 0 ? Math.max(...events.map(item => item.id)) + 1 : 1;
-      events.push(eventData);
+    try {
+      const created = await apiService.request('/events', {
+        method: 'POST',
+        body: JSON.stringify(eventData)
+      });
+      events.push(created);
+    } catch (error) {
+      showDashboardAlert('danger', `Event was not saved: ${error.message}`);
+      return;
     }
 
     syncLocalStorage('events');
@@ -4110,18 +4110,14 @@ async function handleEventFormSubmit(e) {
     const idx = events.findIndex(item => item.id === activeModalEventId);
     if (idx !== -1) {
       const beforeStr = `${events[idx].title} (${events[idx].status})`;
-      if (appState.isApiConnected) {
-        try {
-          events[idx] = await apiService.request(`/events/${activeModalEventId}`, {
-            method: 'PUT',
-            body: JSON.stringify(eventData)
-          });
-        } catch (error) {
-          showDashboardAlert('danger', `Event was not updated: ${error.message}`);
-          return;
-        }
-      } else {
-        events[idx] = { ...events[idx], ...eventData };
+      try {
+        events[idx] = await apiService.request(`/events/${activeModalEventId}`, {
+          method: 'PUT',
+          body: JSON.stringify(eventData)
+        });
+      } catch (error) {
+        showDashboardAlert('danger', `Event was not updated: ${error.message}`);
+        return;
       }
       syncLocalStorage('events');
       addAuditLog('Updated Event Details', beforeStr, `${eventData.title} (${eventData.status})`);
