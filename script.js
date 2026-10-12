@@ -498,13 +498,15 @@ function updateBackendStatus(isOnline) {
 }
 
 const apiService = {
-  baseUrl: window.RIT_API_BASE_URL || (
-    window.location.protocol === 'file:'
-      ? 'http://localhost:5000/api'
-      : window.location.hostname.endsWith('github.io')
-        ? 'https://rit-central-event-management-portal.vercel.app/api'
-        : '/api'
-  ),
+  baseUrl: window.RIT_API_BASE_URL || (() => {
+    const hostname = window.location.hostname;
+    if (window.location.protocol === 'file:') return 'http://localhost:5000/api';
+    if (hostname.endsWith('github.io')
+      || (hostname.endsWith('.vercel.app') && hostname !== 'rit-central-event-management-portal-kappa.vercel.app')) {
+      return 'https://rit-central-event-management-portal-kappa.vercel.app/api';
+    }
+    return '/api';
+  })(),
 
   async request(path, options = {}) {
     const headers = new Headers(options.headers || {});
@@ -528,7 +530,11 @@ const apiService = {
     const timeoutId = setTimeout(() => controller.abort(), 3000);
     try {
       const res = await fetch(`${this.baseUrl}/health`, { signal: controller.signal });
-      if (res.ok) {
+      const contentType = res.headers.get('content-type') || '';
+      const health = contentType.includes('application/json')
+        ? await res.json()
+        : null;
+      if (res.ok && health && health.status === 'ok' && health.database === 'MongoDB') {
         updateBackendStatus(true);
         await this.syncAllFromBackend();
         if (appState.activeView === 'home') loadHomeView();

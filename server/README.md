@@ -149,7 +149,7 @@ In MongoDB Atlas, allow network access from the Vercel deployment. Vercel server
 
 After deployment, check `https://<your-domain>/api/health`. A healthy response reports `"status":"ok"` and `"database":"MongoDB"`. Open the portal on the same domain and confirm its status reads **MongoDB Connected**. Do not run the seed script against a database containing records you need to keep.
 
-GitHub Pages can host the static frontend, but it cannot run the API or safely connect directly to MongoDB. The frontend defaults to the Vercel API at `https://rit-central-event-management-portal.vercel.app/api` when served from `github.io`; both hosting URLs therefore use the same MongoDB data. Keep the API enabled only on the Vercel deployment and confirm its health check before testing admin changes.
+GitHub Pages and protected Vercel preview deployments can host the static frontend, but cannot run the API or safely connect directly to MongoDB. The frontend uses the production API at `https://rit-central-event-management-portal-kappa.vercel.app/api` from those hosts; those portal pages therefore share the production MongoDB data. Keep the API enabled on the Vercel production deployment and confirm its JSON health check before testing admin changes.
 
 Uploaded files use local disk storage in `server/uploads` when self-hosted. On Vercel, uploads are held in memory and returned as data URLs so the portal can store them with the event document in MongoDB; keep demo uploads small because MongoDB documents have a 16 MB limit. For production-scale media, configure durable object storage.
 
