@@ -4,6 +4,33 @@
   "functions": {
     "api/[...path].js": {
       "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/auth/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/analytics/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/events/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/departments/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/registrations/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/audit-logs/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/notifications/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/upload/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
+    },
+    "api/backup/[...path].js": {
+      "includeFiles": "server/{prisma,generated/prisma}/**"
     }
   }
 }
