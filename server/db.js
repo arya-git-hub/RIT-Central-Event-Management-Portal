@@ -1,13 +1,28 @@
 require('dotenv').config();
-const connectionString = process.env.DATABASE_URL || process.env.MONGODB_URI;
+const rawConnectionString = process.env.DATABASE_URL || process.env.MONGODB_URI;
+const connectionString = rawConnectionString
+	? rawConnectionString.trim().replace(/^(["'])(.*)\1$/, '$2').trim()
+	: '';
+let databaseConfigurationError = '';
 if (connectionString) {
-	const databaseUrl = new URL(connectionString);
-	// Prisma's MongoDB connector needs a database name even when Atlas omits it from the URI.
-	if (!databaseUrl.pathname || databaseUrl.pathname === '/') {
-		databaseUrl.pathname = '/rit_central_event_portal';
+	try {
+		const databaseUrl = new URL(connectionString);
+		if (!['mongodb:', 'mongodb+srv:'].includes(databaseUrl.protocol) || !databaseUrl.hostname) {
+			throw new Error('Unsupported MongoDB connection string.');
+		}
+		// Prisma's MongoDB connector needs a database name even when Atlas omits it from the URI.
+		if (!databaseUrl.pathname || databaseUrl.pathname === '/') {
+			databaseUrl.pathname = '/rit_central_event_portal';
+		}
+		process.env.DATABASE_URL = databaseUrl.toString();
+	} catch {
+		databaseConfigurationError = 'Invalid DATABASE_URL or MONGODB_URI. Set a mongodb:// or mongodb+srv:// connection string and URL-encode reserved characters in credentials.';
+		console.error('Invalid MongoDB connection URI configuration. Connection details were not logged.');
 	}
-	process.env.DATABASE_URL = databaseUrl.toString();
+} else {
+	databaseConfigurationError = 'DATABASE_URL or MONGODB_URI is not configured.';
 }
+process.env.DATABASE_CONFIGURATION_ERROR = databaseConfigurationError;
 const { PrismaClient } = require('./generated/prisma');
 
 const basePrisma = new PrismaClient();

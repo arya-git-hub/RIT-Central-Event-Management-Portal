@@ -141,7 +141,7 @@ The frontend portal (`index.html`) is equipped with an **Adaptive API Service La
 
 The repository root contains the static portal and an `api/[...path].js` Vercel function that routes API requests to the Express app. The build generates the Prisma client and copies the portal assets into `public/` for Vercel's static hosting. Keep the Vercel project's **Root Directory** set to the repository root, and set these environment variables in **Settings → Environment Variables** before deploying:
 
-- `MONGODB_URI` or `DATABASE_URL`: the MongoDB Atlas connection string for the portal database. If both are set, `DATABASE_URL` takes precedence; if the URI omits its database path, the API uses `rit_central_event_portal`.
+- `MONGODB_URI` or `DATABASE_URL`: the MongoDB Atlas connection string for the portal database. Enter the URI itself in Vercel; surrounding quotes are accepted, and reserved characters in the username or password must be URL-encoded. If both variables are set, `DATABASE_URL` takes precedence; if the URI omits its database path, the API uses `rit_central_event_portal`.
 - `JWT_SECRET`: a long, unique random secret. Generate it in your password manager; never paste it into source control or chat.
 - `NODE_ENV`: `production`.
 

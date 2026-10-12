@@ -32,6 +32,9 @@ async function ensureDatabaseInitialized() {
 }
 
 app.use('/api', (req, res, next) => {
+  if (process.env.DATABASE_CONFIGURATION_ERROR) {
+    return res.status(503).json({ error: process.env.DATABASE_CONFIGURATION_ERROR });
+  }
   ensureDatabaseInitialized().then(() => next()).catch(next);
 });
 
